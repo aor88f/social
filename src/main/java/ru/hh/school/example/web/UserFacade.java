@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.hh.school.example.EmailAlreadyBoundException;
+import ru.hh.school.example.exceptions.mail.EmailAlreadyBoundException;
 import ru.hh.school.example.User;
 import ru.hh.school.example.UserRepository;
 import ru.hh.school.example.UserService;
+import ru.hh.school.example.exceptions.mail.InvalidEmailException;
 
 @Component
 public class UserFacade {
@@ -28,7 +29,7 @@ public class UserFacade {
     return users;
   }
 
-  public Long registerUser(String email, String password, String fullName) throws EmailAlreadyBoundException {
+  public Long registerUser(String email, String password, String fullName) throws EmailAlreadyBoundException, InvalidEmailException {
     return userService.registerUser(email, password, fullName).getId();
   }
 }
