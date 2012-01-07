@@ -14,45 +14,49 @@ import ru.hh.school.example.exceptions.mail.InvalidEmailException;
 public class UserController {
 
   private final UserFacade userFacade;
+    
+  void log(String s) {
+    System.out.println(s);
+  }
 
   @Autowired
   public UserController(UserFacade userFacade) {
-      System.out.println("UserController.UserController");
+    log("UserController.UserController");
     this.userFacade = userFacade;
   }
 
   @RequestMapping(method = RequestMethod.GET)
   public String list(Model model) {
-      System.out.println("UserController.list");
+    log("UserController.list");
     model.addAttribute("users", userFacade.listUsers());
     return "listUsers";
   }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String create(Model model) {
-        System.out.println("UserController.create");
-        model.addAttribute("userForm", new UserForm());
-        return "login";
+      log("UserController.login");
+      model.addAttribute("userForm", new UserForm());
+      return "login";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
     public String login(Model model) {
-        System.out.println("UserController.create");
-        model.addAttribute("userForm", new UserForm());
-        return "register";
+      log("UserController.create");
+      model.addAttribute("userForm", new UserForm());
+      return "register";
     }
 
   @RequestMapping(method = RequestMethod.POST)
   public String doCreate(Model model, @ModelAttribute("userForm") UserForm userForm) {
-            System.out.println("UserController.doCreate");
+    log("UserController.doCreate");
     try {
       userFacade.registerUser(userForm.getEmail(), userForm.getPassword(), userForm.getFullName());
     } catch (InvalidEmailException e) {
-        model.addAttribute("error", "Email is not valid: " + e.getEmail());
-        return "error";
+      model.addAttribute("error", "Email is not valid: " + e.getEmail());
+      return "error";
     } catch (EmailAlreadyBoundException e) {
-        model.addAttribute("error", "Email already bound: " + e.getEmail());
-        return "error";
+      model.addAttribute("error", "Email already bound: " + e.getEmail());
+      return "error";
     }
     return "redirect:/users";
   }
