@@ -28,12 +28,19 @@ public class UserController {
     return "listUsers";
   }
 
-  @RequestMapping(value = "register", method = RequestMethod.GET)
-  public String create(Model model) {
-      System.out.println("UserController.create");
-    model.addAttribute("userForm", new UserForm());
-    return "register";
-  }
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String create(Model model) {
+        System.out.println("UserController.create");
+        model.addAttribute("userForm", new UserForm());
+        return "login";
+    }
+
+    @RequestMapping(value = "register", method = RequestMethod.GET)
+    public String login(Model model) {
+        System.out.println("UserController.create");
+        model.addAttribute("userForm", new UserForm());
+        return "register";
+    }
 
   @RequestMapping(method = RequestMethod.POST)
   public String doCreate(Model model, @ModelAttribute("userForm") UserForm userForm) {
