@@ -32,18 +32,18 @@ public class UserController {
     return "listUsers";
   }
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @RequestMapping(value = "register", method = RequestMethod.GET)
     public String create(Model model) {
+      log("UserController.register");
+      model.addAttribute("userFormRegister", new UserFormRegister());
+      return "register";
+    }
+
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String login(Model model) {
       log("UserController.login");
       model.addAttribute("userFormLogin", new UserFormLogin());
       return "login";
-    }
-
-    @RequestMapping(value = "register", method = RequestMethod.GET)
-    public String login(Model model) {
-      log("UserController.create");
-      model.addAttribute("userFormRegister", new UserFormRegister());
-      return "register";
     }
 
   @RequestMapping(method = RequestMethod.POST)
