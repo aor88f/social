@@ -4,7 +4,7 @@
 <h1>Registration</h1>
 
 
-<form:form action="/users" method="POST" modelAttribute="userForm">
+<form:form action="/users" method="POST" modelAttribute="userFormRegister">
   <table>
   <tr>
     <td><label for="email">Email:</label></td><td><form:input path="email" id="email"/></td>

@@ -1,6 +1,6 @@
 package ru.hh.school.example.web;
 
-public class UserForm {
+public class UserFormRegister {
 
   private String email;
   private String password;

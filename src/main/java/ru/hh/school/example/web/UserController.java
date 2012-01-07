@@ -35,22 +35,24 @@ public class UserController {
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String create(Model model) {
       log("UserController.login");
-      model.addAttribute("userForm", new UserForm());
+      model.addAttribute("userFormLogin", new UserFormLogin());
       return "login";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
     public String login(Model model) {
       log("UserController.create");
-      model.addAttribute("userForm", new UserForm());
+      model.addAttribute("userFormRegister", new UserFormRegister());
       return "register";
     }
 
   @RequestMapping(method = RequestMethod.POST)
-  public String doCreate(Model model, @ModelAttribute("userForm") UserForm userForm) {
+  public String doCreate(Model model, @ModelAttribute("userFormRegister") UserFormRegister userFormRegister) {
     log("UserController.doCreate");
     try {
-      userFacade.registerUser(userForm.getEmail(), userForm.getPassword(), userForm.getFullName());
+      userFacade.registerUser(userFormRegister.getEmail(),
+                              userFormRegister.getPassword(),
+                              userFormRegister.getFullName());
     } catch (InvalidEmailException e) {
       model.addAttribute("error", "Email is not valid: " + e.getEmail());
       return "error";
