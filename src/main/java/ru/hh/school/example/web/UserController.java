@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import ru.hh.school.example.Logger;
+import ru.hh.school.example.exceptions.login.LoginException;
 import ru.hh.school.example.exceptions.mail.EmailAlreadyBoundException;
 import ru.hh.school.example.exceptions.mail.InvalidEmailException;
 
@@ -14,6 +16,7 @@ import ru.hh.school.example.exceptions.mail.InvalidEmailException;
 public class UserController {
 
   private final UserFacade userFacade;
+  private final Logger logger = new Logger(this);
     
   void log(String s) {
     System.out.println(s);
@@ -21,34 +24,34 @@ public class UserController {
 
   @Autowired
   public UserController(UserFacade userFacade) {
-    log("UserController.UserController");
+    log("UserController");
     this.userFacade = userFacade;
   }
 
   @RequestMapping(method = RequestMethod.GET)
   public String list(Model model) {
-    log("UserController.list");
+    logger.log("list");
     model.addAttribute("users", userFacade.listUsers());
     return "listUsers";
   }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
     public String create(Model model) {
-      log("UserController.register");
+        logger.log("register");
       model.addAttribute("userFormRegister", new UserFormRegister());
       return "register";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String login(Model model) {
-      log("UserController.login");
+        logger.log("login");
       model.addAttribute("userFormLogin", new UserFormLogin());
       return "login";
     }
 
   @RequestMapping(value = "/register", method = RequestMethod.POST)
   public String doCreate(Model model, @ModelAttribute("userFormRegister") UserFormRegister userFormRegister) {
-    log("UserController.doCreate");
+      logger.log("doCreate");
     try {
       userFacade.registerUser(userFormRegister.getEmail(),
                               userFormRegister.getPassword(),
@@ -63,16 +66,9 @@ public class UserController {
     return "redirect:/users";
   }
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String loginz(Model model) {
-        log("UserController.login");
-        model.addAttribute("userFormLogin", new UserFormLogin());
-        return "login";
-    }
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String doLogin(Model model, @ModelAttribute("userFormLogin") UserFormLogin userFormLogin) {
-        log("UserController.doLogin");
+        logger.log("doLogin");
         try {
             userFacade.loginUser(userFormLogin.getEmail(), userFormLogin.getPassword());
         } catch (LoginException e) {
