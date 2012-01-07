@@ -46,7 +46,7 @@ public class UserController {
       return "login";
     }
 
-  @RequestMapping(method = RequestMethod.POST)
+  @RequestMapping(value = "/register", method = RequestMethod.POST)
   public String doCreate(Model model, @ModelAttribute("userFormRegister") UserFormRegister userFormRegister) {
     log("UserController.doCreate");
     try {
@@ -62,4 +62,24 @@ public class UserController {
     }
     return "redirect:/users";
   }
+
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String loginz(Model model) {
+        log("UserController.login");
+        model.addAttribute("userFormLogin", new UserFormLogin());
+        return "login";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String doLogin(Model model, @ModelAttribute("userFormLogin") UserFormLogin userFormLogin) {
+        log("UserController.doLogin");
+        try {
+            userFacade.loginUser(userFormLogin.getEmail(), userFormLogin.getPassword());
+        } catch (LoginException e) {
+            model.addAttribute("error", "The username or password you entered is incorrect.");
+            return "error";
+        }
+        model.addAttribute("userFormLogin", new UserFormLogin());
+        return "redirect:/users";
+    }
 }
