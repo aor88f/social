@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import ru.hh.school.example.ddd.Entity;
 import ru.hh.school.example.ddd.Repository;
+import ru.hh.school.example.exceptions.login.LoginException;
 
 public abstract class MemRepository<T extends Entity> implements Repository<T> {
 

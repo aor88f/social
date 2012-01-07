@@ -2,6 +2,7 @@ package ru.hh.school.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.hh.school.example.exceptions.login.LoginException;
 import ru.hh.school.example.exceptions.mail.EmailAlreadyBoundException;
 import ru.hh.school.example.exceptions.mail.InvalidEmailException;
 
@@ -18,16 +19,23 @@ public class UserService {
     this.users = users;
   }
 
-  public User registerUser(String email, String password, String fullName) throws EmailAlreadyBoundException, InvalidEmailException {
-    if (!isValidEmail(email))
-        throw new InvalidEmailException(email);
-    User existing = users.byEmail(email);
-    if (existing != null)
-      throw new EmailAlreadyBoundException(email);
-    User user = new User(email, password, fullName);
-    users.put(user);
-    return user;
-  }
+    public User registerUser(String email, String password, String fullName) throws EmailAlreadyBoundException, InvalidEmailException {
+        if (!isValidEmail(email))
+            throw new InvalidEmailException(email);
+        User existing = users.byEmail(email);
+        if (existing != null)
+            throw new EmailAlreadyBoundException(email);
+        User user = new User(email, password, fullName);
+        users.put(user);
+        return user;
+    }
+
+    public User loginUser(String email, String password) throws LoginException {
+        User existing = users.byEmailPassword(email, password);
+        if (existing == null)
+            throw new LoginException(-1, email, password);
+        return existing;
+    }
 
   public boolean isValidEmail(final String email) {
       final String EMAIL_PATTERN =
