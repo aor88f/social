@@ -50,10 +50,7 @@ public class UserController {
       model.addAttribute("var", "<a href=\"login\">Login</a>");
       return "error";
     }
-    model.addAttribute("navigation", getNavigation());
-    model.addAttribute("cv", "C++, Java, Assembler.");
-    model.addAttribute("recommendations", userFacade.listRecommendationsToUser(0L));
-    return "home";
+    return "redirect:/users/home";
   }
 
   @RequestMapping(value = "register", method = RequestMethod.GET)
@@ -92,7 +89,9 @@ public class UserController {
   @RequestMapping(value = "home", method = RequestMethod.GET)
   public String home(Model model) {
     logger.log("home");
-    model.addAttribute("userFormLogin", new UserFormLogin());
-    return "login";
+    model.addAttribute("navigation", getNavigation());
+    model.addAttribute("cv", "C++, Java, Assembler.");
+    model.addAttribute("recommendations", userFacade.listRecommendationsToUser(0L));
+    return "home";
   }
 }
