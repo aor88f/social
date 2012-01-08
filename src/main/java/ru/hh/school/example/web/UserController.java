@@ -35,9 +35,18 @@ public class UserController {
     log("getSessionId: " + ret);
     return ret;
   }
-    
-  protected String getNavigation() {
+
+  protected String getNavigationLoginned() {
     return "<a href=home>Home</a>  <a href=listUsers>Users</a>  <a href=logout>Logout</a>";
+  }
+
+  protected String getNavigationNotLoginned() {
+    return "<a href=listUsers>Users</a>  <a href=login>Login</a>  <a href=register>Register</a>";
+  }
+
+  protected String getNavigation() {
+    return (userFacade.getUserBySessionId(getSessionId()) == null) ? getNavigationNotLoginned()
+                                                                   : getNavigationLoginned();
   }
 
   @RequestMapping(method = RequestMethod.GET)
@@ -51,6 +60,7 @@ public class UserController {
   @RequestMapping(value = "login", method = RequestMethod.GET)
   public String login(Model model) {
     logger.log("login");
+    model.addAttribute("navigation", getNavigation());
     model.addAttribute("userFormLogin", new UserFormLogin());
     return "login";
   }
@@ -61,8 +71,9 @@ public class UserController {
     try {
       userFacade.loginUser(userFormLogin.getEmail(), userFormLogin.getPassword(), getSessionId());
     } catch (LoginException e) {
+      model.addAttribute("navigation", getNavigation());
       model.addAttribute("error", "The username or password you entered is incorrect.");
-      model.addAttribute("var", "<a href=\"login\">Login</a>");
+      model.addAttribute("var", "<a href=\"login\">Back</a>");
       return "error";
     }
 
@@ -72,6 +83,7 @@ public class UserController {
   @RequestMapping(value = "register", method = RequestMethod.GET)
   public String create(Model model) {
     logger.log("register");
+    model.addAttribute("navigation", getNavigation());
     model.addAttribute("userFormRegister", new UserFormRegister());
     return "register";
   }
@@ -84,15 +96,17 @@ public class UserController {
                               userFormRegister.getPassword(),
                               userFormRegister.getFullName());
     } catch (InvalidEmailException e) {
-      model.addAttribute("var", "<a href=\"register\">Register</a>");
+      model.addAttribute("navigation", getNavigation());
       model.addAttribute("error", "Email is not valid: " + e.getEmail());
+      model.addAttribute("var", "<a href=\"register\">Back</a>");
       return "error";
     } catch (EmailAlreadyBoundException e) {
+      model.addAttribute("navigation", getNavigation());
       model.addAttribute("error", "Email already bound: " + e.getEmail());
-      model.addAttribute("var", "<a href=\"register\">Register</a>");
+      model.addAttribute("var", "<a href=\"register\">Back</a>");
       return "error";
     }
-    return "redirect:/users";
+    return "redirect:/users/login";
   }
 
   @RequestMapping(value = "home", method = RequestMethod.GET)
@@ -100,7 +114,7 @@ public class UserController {
     logger.log("home");
     User user = userFacade.getUserBySessionId(getSessionId());
     if (user == null)
-        return "redirect:/users/login";
+      return "redirect:/users/login";
     model.addAttribute("user", user.getEmail());
     model.addAttribute("navigation", getNavigation());
     model.addAttribute("cv", "C++, Java, Assembler.");

@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
+${navigation}
+
 <h1>Login</h1>
 
 
@@ -17,6 +19,3 @@
   </tr>
   </table>
 </form:form>
-<tr>
-  <td><a href="register">Register</a></td>
-</tr>
