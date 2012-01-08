@@ -22,7 +22,7 @@ public class MemUserRepository extends MemRepository<User> implements UserReposi
   public User byIdPassword(Long id, String password) throws LoginException {
     logger.log("byIdPassword");
     User user = byId(id);
-    if (password != user.getPassword()) {
+    if (user == null || !password.equals(user.getPassword())) {
       throw new LoginException(id, null, password);
     }
     return user;
@@ -31,7 +31,7 @@ public class MemUserRepository extends MemRepository<User> implements UserReposi
   public User byEmailPassword(String email, String password) throws LoginException {
     logger.log("byEmailPassword");
     User user = byEmail(email);
-    if (password != user.getPassword()) {
+    if (user == null || !password.equals(user.getPassword())) {
       throw new LoginException(-1, email, password);
     }
     return user;
