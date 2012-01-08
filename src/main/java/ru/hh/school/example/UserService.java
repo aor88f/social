@@ -20,33 +20,33 @@ public class UserService {
     this.users = users;
   }
 
-    public User registerUser(String email, String password, String fullName) throws EmailAlreadyBoundException, InvalidEmailException {
-        logger.log("registerUser");
-        if (!isValidEmail(email))
-            throw new InvalidEmailException(email);
-        User existing = users.byEmail(email);
-        if (existing != null)
-            throw new EmailAlreadyBoundException(email);
-        User user = new User(email, password, fullName);
-        users.put(user);
-        return user;
-    }
+  public User registerUser(String email, String password, String fullName) throws EmailAlreadyBoundException, InvalidEmailException {
+    logger.log("registerUser");
+    if (!isValidEmail(email))
+      throw new InvalidEmailException(email);
+    User existing = users.byEmail(email);
+    if (existing != null)
+      throw new EmailAlreadyBoundException(email);
+    User user = new User(email, password, fullName);
+    users.put(user);
+    return user;
+  }
 
-    public User loginUser(String email, String password) throws LoginException {
-        logger.log("loginUser");
-        User existing = users.byEmailPassword(email, password);
-        if (existing == null)
-            throw new LoginException(-1, email, password);
-        return existing;
-    }
+  public User loginUser(String email, String password) throws LoginException {
+    logger.log("loginUser");
+    User existing = users.byEmailPassword(email, password);
+    if (existing == null)
+      throw new LoginException(-1, email, password);
+    return existing;
+  }
 
   public boolean isValidEmail(final String email) {
-      logger.log("email");
-      final String EMAIL_PATTERN =
-        "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    logger.log("email");
+    final String EMAIL_PATTERN =
+      "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-      Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-      Matcher matcher = pattern.matcher(email);
-      return matcher.matches();
+    Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+    Matcher matcher = pattern.matcher(email);
+    return matcher.matches();
   }
 }
