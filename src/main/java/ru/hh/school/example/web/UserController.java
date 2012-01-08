@@ -157,16 +157,23 @@ public class UserController {
     return "user";
   }
 
-
   @RequestMapping(value = "/addRecommendation", method = RequestMethod.GET)
   public String addRecommendation(Model model) {
     logger.out("addRecommendation");
     User user = userFacade.getUserBySessionId(getSessionId());
     if (user == null)
       return "redirect:/users/login";
+    RecommendationForm recommendationForm = new RecommendationForm();
+    recommendationForm.setUserId(user.getId());
     model.addAttribute("user", user);
     model.addAttribute("navigation", getNavigation());
-    model.addAttribute("recommendationForm", new RecommendationForm());
+    model.addAttribute("recommendationForm", recommendationForm);
     return "addRecommendation";
+  }
+
+  @RequestMapping(value = "/addRecommendation", method = RequestMethod.POST)
+  public String doAddRecommendation(Model model, @ModelAttribute("recommendationForm") RecommendationForm recommendationForm) {
+    logger.out("doAddRecommendation");
+    return "redirect:/users/home";
   }
 }

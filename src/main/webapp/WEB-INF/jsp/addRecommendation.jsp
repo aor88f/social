@@ -11,6 +11,10 @@ ${navigation}
   <tr>
     <td><label for="text">Text:</label></td><td><form:input path="text" id="text" value="${recommendationForm.text}"/></td>
   </tr>
+  <tr>
+    <td><label for="userId">UserID:</label></td><td><form:input path="userId" id="userId" value="${recommendationForm.userId}"/></td>
+  </tr>
+  <tr>
     <td/><td><input type="submit" value="Submit"/></td>
   </tr>
   </table>
