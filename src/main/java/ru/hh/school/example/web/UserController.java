@@ -76,7 +76,7 @@ public class UserController {
       model.addAttribute("var", "<a href=\"register\">Register</a>");
       return "error";
     }
-    return "redirect:/users";
+    return "redirect:/login";
   }
 
   @RequestMapping(value = "login", method = RequestMethod.GET)
