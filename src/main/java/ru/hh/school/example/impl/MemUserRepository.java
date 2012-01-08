@@ -1,13 +1,18 @@
 package ru.hh.school.example.impl;
 
 import org.springframework.stereotype.Component;
+import ru.hh.school.example.Logger;
 import ru.hh.school.example.User;
 import ru.hh.school.example.UserRepository;
 import ru.hh.school.example.exceptions.login.LoginException;
 
 @Component
 public class MemUserRepository extends MemRepository<User> implements UserRepository {
+
+  private final Logger logger = new Logger(this);
+    
   public User byEmail(String email) {
+    logger.log("byEmail");
     for (User user : all())
       if (user.getEmail().equals(email))
         return user;
@@ -15,6 +20,7 @@ public class MemUserRepository extends MemRepository<User> implements UserReposi
   }
 
   public User byIdPassword(Long id, String password) throws LoginException {
+    logger.log("byIdPassword");
     User user = byId(id);
     if (password != user.getPassword()) {
       throw new LoginException(id, null, password);
@@ -23,6 +29,7 @@ public class MemUserRepository extends MemRepository<User> implements UserReposi
   }
 
   public User byEmailPassword(String email, String password) throws LoginException {
+    logger.log("byEmailPassword");
     User user = byEmail(email);
     if (password != user.getPassword()) {
       throw new LoginException(-1, email, password);
