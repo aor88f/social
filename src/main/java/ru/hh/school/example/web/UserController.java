@@ -49,7 +49,7 @@ public class UserController {
                                                                    : getNavigationLoginned();
   }
 
-  @RequestMapping(method = RequestMethod.GET)
+  @RequestMapping(value = "/listUsers", method = RequestMethod.GET)
   public String list(Model model) {
     logger.log("list");
     model.addAttribute("navigation", getNavigation());

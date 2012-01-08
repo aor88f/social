@@ -10,7 +10,3 @@ ${navigation}
     <li>${user.fullName}[${user.email}]</li>
   </c:forEach>
 </ul>
-
-<br>
-
-<a href="/users/register">Register</a>
