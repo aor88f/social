@@ -57,7 +57,7 @@ public class UserController {
     return "listUsers";
   }
 
-  @RequestMapping(value = "login", method = RequestMethod.GET)
+  @RequestMapping(value = "/login", method = RequestMethod.GET)
   public String login(Model model) {
     logger.log("login");
     model.addAttribute("navigation", getNavigation());
@@ -80,7 +80,7 @@ public class UserController {
     return "redirect:/users/home";
   }
 
-  @RequestMapping(value = "register", method = RequestMethod.GET)
+  @RequestMapping(value = "/register", method = RequestMethod.GET)
   public String create(Model model) {
     logger.log("register");
     model.addAttribute("navigation", getNavigation());
@@ -109,16 +109,23 @@ public class UserController {
     return "redirect:/users/login";
   }
 
-  @RequestMapping(value = "home", method = RequestMethod.GET)
+  @RequestMapping(value = "/home", method = RequestMethod.GET)
   public String home(Model model) {
     logger.log("home");
     User user = userFacade.getUserBySessionId(getSessionId());
     if (user == null)
       return "redirect:/users/login";
-    model.addAttribute("user", user.getEmail());
+    model.addAttribute("user", user.getFullName() + '[' + user.getEmail() + ']');
     model.addAttribute("navigation", getNavigation());
     model.addAttribute("cv", "C++, Java, Assembler.");
     model.addAttribute("recommendations", userFacade.listRecommendationsToUser(0L));
     return "home";
+  }
+
+  @RequestMapping(value = "/logout", method = RequestMethod.GET)
+  public String logout(Model model) {
+    logger.log("logout");
+    userFacade.logoutUser(getSessionId());
+    return "redirect:/";
   }
 }

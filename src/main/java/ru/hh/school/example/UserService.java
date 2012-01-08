@@ -44,12 +44,12 @@ public class UserService {
     return existing;
   }
     
-  public User getUserBySessionId(String session) {
-    return users.byId(userSessions.getEntityId(session));
+  public User getUserBySessionId(String sessionId) {
+    return users.byId(userSessions.getEntityId(sessionId));
   }
     
-  public void logoutUser(String session) {
-    userSessions.logout(session);
+  public void logoutUser(String sessionId) {
+    userSessions.logout(sessionId);
   }
 
   public boolean isValidEmail(final String email) {
