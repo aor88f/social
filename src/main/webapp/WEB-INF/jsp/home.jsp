@@ -6,27 +6,37 @@ ${navigation}
 <h1>Home ${user.fullName}[${user.email}]</h1>
 
 <h2>Form</h2>
-<table border=1 cellpadding=5>
-  <tr>
-    <td>From</td><td>${userForm.from}</td>
-  </tr>
-  <tr>
-    <td>Education</td><td>${userForm.education}</td>
-  </tr>
-  <tr>
-    <td>Experience</td><td>${userForm.experience}</td>
-  </tr>
-</table>
-<tr>
-  <td><a href="editForm">Edit</a></td>
-</tr>
+<ul cellspacing=0>
+  <table border=1 cellpadding=5>
+    <tr>
+      <td>From</td><td>${userForm.from}</td>
+    </tr>
+    <tr>
+      <td>Education</td><td>${userForm.education}</td>
+    </tr>
+    <tr>
+      <td>Experience</td><td>${userForm.experience}</td>
+    </tr>
+  </table>
+</ul>
+<ul>
+  <a href="editForm">Edit</a>
+</ul>
 
 <br>
 
 <h2>Recommendations</h2>
+
 <ul>
   <c:forEach var="rec" items="${recommendations}">
-    <h3>${rec.fromUserInfo.fullName}[${rec.fromUserInfo.email}]</h3>
-    <h4>${rec.text}</h4>
+    <table border=1 cellpadding=5 width=320>
+      <tr>
+        <td><a href="user?id=${rec.fromUserInfo.id}">${rec.fromUserInfo.fullName}[${rec.fromUserInfo.email}]</a></td>
+      </tr>
+      <tr>
+        <td>${rec.text}</td>
+      </tr>
+    </table>
+    <br>
   </c:forEach>
 </ul>
