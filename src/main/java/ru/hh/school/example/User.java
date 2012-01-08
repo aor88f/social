@@ -9,13 +9,17 @@ public class User extends Entity {
   private String email;
   private String password;
   private String fullName;
-  public/*!*/ UserForm userForm = new UserForm();
+  private UserForm userForm = new UserForm();
 
   public User(String email, String password, String fullName) {
     logger.log("User");
     this.email = email;
     this.password = password;
     this.fullName = fullName;
+  }
+    
+  public void setUserForm(UserForm userForm) {
+    this.userForm = userForm;
   }
 
   public String getEmail() {

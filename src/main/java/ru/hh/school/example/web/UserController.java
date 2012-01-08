@@ -117,7 +117,6 @@ public class UserController {
       return "redirect:/users/login";
     model.addAttribute("user", user.getFullName() + '[' + user.getEmail() + ']');
     model.addAttribute("navigation", getNavigation());
-    UserForm userForm = user.getUserForm();
     model.addAttribute("from", user.getUserForm().getFrom());
     model.addAttribute("education", user.getUserForm().getEducation());
     model.addAttribute("experience", user.getUserForm().getExperience());
@@ -147,7 +146,7 @@ public class UserController {
   public String doEditForm(Model model, @ModelAttribute("userForm") UserForm userForm) {
     logger.log("doEditForm");
     User user = userFacade.getUserBySessionId(getSessionId());
-    user.userForm = userForm;
+    user.setUserForm(userForm);
     return "redirect:/users/home";
   }
 }
