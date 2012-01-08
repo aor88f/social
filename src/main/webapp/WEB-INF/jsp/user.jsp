@@ -20,7 +20,7 @@ ${navigation}
 
 <br>
 
-<a href=addRecommendation>Add recommendation</a>
+<a href=addRecommendation?id=${user.id}>Add recommendation</a>
 
 <br>
 

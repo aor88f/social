@@ -13,7 +13,7 @@ public class RecommendationForm {
     return text;
   }
 
-  public void setText(String email) {
+  public void setText(String text) {
     logger.out("setText");
     this.text = text;
   }

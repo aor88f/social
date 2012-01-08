@@ -12,7 +12,7 @@ public class LoginException extends Exception {
     this.password = password;
   }
 
-  public long getIdl() {
+  public long getId() {
     return id;
   }
 

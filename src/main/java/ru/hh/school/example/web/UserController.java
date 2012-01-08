@@ -112,12 +112,13 @@ public class UserController {
   @RequestMapping(value = "/home", method = RequestMethod.GET)
   public String home(Model model) {
     logger.out("home");
-    User user = userFacade.getUserBySessionId(getSessionId());
-    if (user == null)
+    User sessionUser = userFacade.getUserBySessionId(getSessionId());
+    if (sessionUser == null)
       return "redirect:/users/login";
-    model.addAttribute("user", user);
+    model.addAttribute("user", sessionUser);
     model.addAttribute("navigation", getNavigation());
-    model.addAttribute("userForm", user.getUserForm());
+    model.addAttribute("userForm", sessionUser.getUserForm());
+    model.addAttribute("recommendations", userFacade.listRecommendationsToUserEx(sessionUser.getId()));
     return "home";
   }
 
@@ -131,19 +132,19 @@ public class UserController {
   @RequestMapping(value = "/editForm", method = RequestMethod.GET)
   public String editForm(Model model) {
     logger.out("editForm");
-    User user = userFacade.getUserBySessionId(getSessionId());
-    if (user == null)
+    User sessionUser = userFacade.getUserBySessionId(getSessionId());
+    if (sessionUser == null)
       return "redirect:/users/login";
     model.addAttribute("navigation", getNavigation());
-    model.addAttribute("userForm", user.getUserForm());
+    model.addAttribute("userForm", sessionUser.getUserForm());
     return "editForm";
   }
 
   @RequestMapping(value = "/editForm", method = RequestMethod.POST)
   public String doEditForm(Model model, @ModelAttribute("userForm") UserForm userForm) {
     logger.out("doEditForm");
-    User user = userFacade.getUserBySessionId(getSessionId());
-    user.setUserForm(userForm);
+    User sessionUser = userFacade.getUserBySessionId(getSessionId());
+      sessionUser.setUserForm(userForm);
     return "redirect:/users/home";
   }
 
@@ -154,17 +155,24 @@ public class UserController {
     model.addAttribute("navigation", getNavigation());
     model.addAttribute("user", user);
     model.addAttribute("userForm", user.getUserForm());
+    model.addAttribute("recommendations", userFacade.listRecommendationsToUserEx(user.getId()));
     return "user";
   }
 
   @RequestMapping(value = "/addRecommendation", method = RequestMethod.GET)
-  public String addRecommendation(Model model) {
+  public String addRecommendation(Model model, @RequestParam("id") long id) {
     logger.out("addRecommendation");
-    User user = userFacade.getUserBySessionId(getSessionId());
-    if (user == null)
+    User sessionUser = userFacade.getUserBySessionId(getSessionId());
+    if (sessionUser == null)
       return "redirect:/users/login";
+    User user = userFacade.getUserById(id);
+    if (user == null) {
+      model.addAttribute("navigation", getNavigation());
+      model.addAttribute("error", "UserID is incorrected: " + id);
+      return "error";
+    }
     RecommendationForm recommendationForm = new RecommendationForm();
-    recommendationForm.setUserId(user.getId());
+    recommendationForm.setUserId(id);
     model.addAttribute("user", user);
     model.addAttribute("navigation", getNavigation());
     model.addAttribute("recommendationForm", recommendationForm);
@@ -174,6 +182,26 @@ public class UserController {
   @RequestMapping(value = "/addRecommendation", method = RequestMethod.POST)
   public String doAddRecommendation(Model model, @ModelAttribute("recommendationForm") RecommendationForm recommendationForm) {
     logger.out("doAddRecommendation");
-    return "redirect:/users/home";
+    User sessionUser = userFacade.getUserBySessionId(getSessionId());
+    if (sessionUser == null) {
+      model.addAttribute("navigation", getNavigation());
+      model.addAttribute("error", "You are not loggined.");
+      model.addAttribute("var", "<a href=\"login\">Login</a>");
+      return "error";
+    }
+    long userId = recommendationForm.getUserId();
+    User user = userFacade.getUserById(userId);
+    if (user == null) {
+      model.addAttribute("navigation", getNavigation());
+      model.addAttribute("error", "UserID is incorrected: " + userId);
+      model.addAttribute("var", "<a href=\"addRecommendation\">Back</a>");
+      return "error";
+    }
+    RecommendationToUser recommendationToUser = new RecommendationToUser(
+                                                      recommendationForm.getUserId(),
+                                                      recommendationForm.getText()
+                                                      );
+    if (!userFacade.addRecommendationToUser(sessionUser.getId(), recommendationToUser));
+    return "redirect:/users/user?id=" + userId;
   }
 }

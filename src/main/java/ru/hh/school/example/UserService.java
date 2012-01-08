@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.hh.school.example.exceptions.login.LoginException;
 import ru.hh.school.example.exceptions.mail.EmailAlreadyBoundException;
 import ru.hh.school.example.exceptions.mail.InvalidEmailException;
+import ru.hh.school.example.web.RecommendationToUser;
 import ru.hh.school.example.web.UserSessions;
 
 import java.util.regex.Matcher;
@@ -59,8 +60,16 @@ public class UserService {
     logger.out("logoutUser");
     userSessions.logout(sessionId);
   }
+    
+  public boolean addRecommendation(Long userId, RecommendationToUser recommendationToUser) {
+    User user = getUserById(userId);
+    if (user == null)
+      return false;
+    user.addRecommendation(recommendationToUser);
+    return true;
+  }
 
-  public boolean isValidEmail(final String email) {
+  protected boolean isValidEmail(final String email) {
     logger.out("isValidEmail");
     final String emailPattern =
       "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";

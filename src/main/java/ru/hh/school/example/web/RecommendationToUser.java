@@ -6,18 +6,18 @@ import ru.hh.school.example.User;
 public class RecommendationToUser {
 
   private final Logger logger = new Logger(this);
-  private final UserInfo fromUserInfo;
+  private final long fromUserId;
   private final String text;
 
-  public RecommendationToUser(UserInfo fromUserInfo, String text) {
+  public RecommendationToUser(long fromUserId, String text) {
     logger.out("RecommendationToUser");
-    this.fromUserInfo = fromUserInfo;
+    this.fromUserId = fromUserId;
     this.text = text;
   }
 
-  public UserInfo getFromUserInfo() {
-    logger.out("getFromUserInfo");
-    return fromUserInfo;
+  public long getFromUserId() {
+    logger.out("getFromUserId");
+    return fromUserId;
   }
 
   public String getText() {

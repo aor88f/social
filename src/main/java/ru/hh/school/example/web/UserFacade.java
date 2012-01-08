@@ -12,6 +12,8 @@ import ru.hh.school.example.UserRepository;
 import ru.hh.school.example.UserService;
 import ru.hh.school.example.exceptions.mail.InvalidEmailException;
 
+import javax.security.sasl.RealmChoiceCallback;
+
 @Component
 public class UserFacade {
 
@@ -35,12 +37,22 @@ public class UserFacade {
     return users;
   }
 
-  public Iterable<RecommendationToUser> listRecommendationsToUser(long id) {
+  public Iterable<RecommendationToUserEx> listRecommendationsToUserEx(long id) {
     logger.out("listRecommendationsToUser");
-    List<RecommendationToUser> ret = new ArrayList<RecommendationToUser>();
-    UserInfo ui = new UserInfo(new User("asdf", "asdf", "asdf@asdf.asdf"));
-    ret.add(new RecommendationToUser(ui, "rec_text"));
-    return ret;
+    //List<RecommendationToUser> ret = new ArrayList<RecommendationToUser>();
+    //UserInfo ui = new UserInfo(new User("asdf", "asdf", "asdf@asdf.asdf"));
+    //ret.add(new RecommendationToUser(ui, "rec_text"));
+    //return ret;
+    Iterable<RecommendationToUser> recs = userService.getUserById(id).getRecommendationsList();
+    List<RecommendationToUserEx> recsEx = new ArrayList<RecommendationToUserEx>();
+    for (RecommendationToUser rec : recs) {
+      User userFrom = getUserById(rec.getFromUserId());
+      UserInfo userFromInfo = new UserInfo(userFrom);
+      String text = rec.getText();
+      RecommendationToUserEx recEx = new RecommendationToUserEx(userFromInfo, text);
+      recsEx.add(recEx);
+    }
+    return recsEx;
   }
 
   public Long registerUser(String email, String password, String fullName) throws EmailAlreadyBoundException, InvalidEmailException {
@@ -66,5 +78,9 @@ public class UserFacade {
   public User getUserBySessionId(String sessionId) {
     logger.out("getUserBySessionId");
     return userService.getUserBySessionId(sessionId);
+  }
+
+  public boolean addRecommendationToUser(long userId, RecommendationToUser recommendationToUser) {
+    return userService.addRecommendation(userId, recommendationToUser);
   }
 }
