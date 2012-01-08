@@ -41,7 +41,11 @@ public class UserFacade {
     return userService.registerUser(email, password, fullName).getId();
   }
 
-  public Long loginUser(String email, String password) throws LoginException {
-    return userService.loginUser(email, password).getId();
+  public Long loginUser(String email, String password, String sessionId) throws LoginException {
+    return userService.loginUser(email, password, sessionId).getId();
+  }
+    
+  public User getUserBySessionId(String sessionId) {
+    return userService.getUserBySessionId(sessionId);
   }
 }

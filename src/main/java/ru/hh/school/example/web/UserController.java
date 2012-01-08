@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.RequestContextHolder;
 import ru.hh.school.example.Logger;
+import ru.hh.school.example.User;
 import ru.hh.school.example.exceptions.login.LoginException;
 import ru.hh.school.example.exceptions.mail.EmailAlreadyBoundException;
 import ru.hh.school.example.exceptions.mail.InvalidEmailException;
@@ -18,7 +19,7 @@ public class UserController {
 
   private final UserFacade userFacade;
   private final Logger logger = new Logger(this);
-    
+
   void log(String s) {
     System.out.println(s);
   }
@@ -30,8 +31,9 @@ public class UserController {
   }
 
   protected String getSessionId() {
-    log("getSessionId");
-    return RequestContextHolder.currentRequestAttributes().getSessionId();
+    String ret = RequestContextHolder.currentRequestAttributes().getSessionId();
+    log("getSessionId: " + ret);
+    return ret;
   }
     
   protected String getNavigation() {
@@ -46,16 +48,24 @@ public class UserController {
     return "listUsers";
   }
 
+  @RequestMapping(value = "login", method = RequestMethod.GET)
+  public String login(Model model) {
+    logger.log("login");
+    model.addAttribute("userFormLogin", new UserFormLogin());
+    return "login";
+  }
+
   @RequestMapping(value = "/login", method = RequestMethod.POST)
   public String doLogin(Model model, @ModelAttribute("userFormLogin") UserFormLogin userFormLogin) {
     logger.log("doLogin");
     try {
-      userFacade.loginUser(userFormLogin.getEmail(), userFormLogin.getPassword());
+      userFacade.loginUser(userFormLogin.getEmail(), userFormLogin.getPassword(), getSessionId());
     } catch (LoginException e) {
       model.addAttribute("error", "The username or password you entered is incorrect.");
       model.addAttribute("var", "<a href=\"login\">Login</a>");
       return "error";
     }
+
     return "redirect:/users/home";
   }
 
@@ -82,19 +92,16 @@ public class UserController {
       model.addAttribute("var", "<a href=\"register\">Register</a>");
       return "error";
     }
-    return "redirect:/login";
-  }
-
-  @RequestMapping(value = "login", method = RequestMethod.GET)
-  public String login(Model model) {
-    logger.log("login");
-    model.addAttribute("userFormLogin", new UserFormLogin());
-    return "login";
+    return "redirect:/users";
   }
 
   @RequestMapping(value = "home", method = RequestMethod.GET)
   public String home(Model model) {
     logger.log("home");
+    User user = userFacade.getUserBySessionId(getSessionId());
+    if (user == null)
+        return "redirect:/users/login";
+    model.addAttribute("user", user.getEmail());
     model.addAttribute("navigation", getNavigation());
     model.addAttribute("cv", "C++, Java, Assembler.");
     model.addAttribute("recommendations", userFacade.listRecommendationsToUser(0L));

@@ -3,7 +3,7 @@
 
 ${navigation}
 
-<h1>Home</h1>
+<h1>Home [${user}]</h1>
 
 <h2>CV</h2>
 <h3>${cv}</h3>
