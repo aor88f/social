@@ -3,7 +3,7 @@
 
 ${navigation}
 
-<h1>Home ${user}</h1>
+<h1>Home ${user.fullName}[${user.email}]</h1>
 
 <h2>Form</h2>
 <table border=1 cellpadding=5>

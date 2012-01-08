@@ -115,7 +115,7 @@ public class UserController {
     User user = userFacade.getUserBySessionId(getSessionId());
     if (user == null)
       return "redirect:/users/login";
-    model.addAttribute("user", user.getFullName() + '[' + user.getEmail() + ']');
+    model.addAttribute("user", user);
     model.addAttribute("navigation", getNavigation());
     model.addAttribute("userForm", user.getUserForm());
     return "home";
@@ -155,5 +155,18 @@ public class UserController {
     model.addAttribute("user", user);
     model.addAttribute("userForm", user.getUserForm());
     return "user";
+  }
+
+
+  @RequestMapping(value = "/addRecommendation", method = RequestMethod.GET)
+  public String addRecommendation(Model model) {
+    logger.out("addRecommendation");
+    User user = userFacade.getUserBySessionId(getSessionId());
+    if (user == null)
+      return "redirect:/users/login";
+    model.addAttribute("user", user);
+    model.addAttribute("navigation", getNavigation());
+    model.addAttribute("recommendationForm", new RecommendationForm());
+    return "addRecommendation";
   }
 }
