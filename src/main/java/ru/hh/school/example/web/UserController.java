@@ -139,7 +139,7 @@ public class UserController {
     if (user == null)
       return "redirect:/users/login";
     model.addAttribute("navigation", getNavigation());
-    model.addAttribute("userForm", new UserForm());
+    model.addAttribute("userForm", user.getUserForm());
     return "editForm";
   }
 
@@ -147,9 +147,6 @@ public class UserController {
   public String doEditForm(Model model, @ModelAttribute("userForm") UserForm userForm) {
     logger.log("doEditForm");
     User user = userFacade.getUserBySessionId(getSessionId());
-    System.out.println("userForm.getFrom(): " + userForm.getFrom());
-    System.out.println("userForm.getEducation(): " + userForm.getEducation());
-    System.out.println("userForm.getExperience(): " + userForm.getExperience());
     user.userForm = userForm;
     return "redirect:/users/home";
   }

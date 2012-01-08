@@ -9,13 +9,13 @@ ${navigation}
 <form:form action="editForm" method="POST" modelAttribute="userForm">
   <table>
   <tr>
-    <td><label for="from">From:</label></td><td><form:input path="from" id="from"/></td>
+    <td><label for="from">From:</label></td><td><form:input path="from" id="from" value="${userForm.from}"/></td>
   </tr>
   <tr>
-    <td><label for="education">Education:</label></td><td><form:input path="education" id="education"/></td>
+    <td><label for="education">Education:</label></td><td><form:input path="education" id="education" value="${userForm.education}"/></td>
   </tr>
   <tr>
-    <td><label for="experience">Experience:</label></td><td><form:input path="experience" id="experience"/></td>
+    <td><label for="experience">Experience:</label></td><td><form:input path="experience" id="experience" value="${userForm.experience}"/></td>
   </tr>
   <tr>
     <td/><td><input type="submit" value="Edit"/></td>
