@@ -117,7 +117,10 @@ public class UserController {
       return "redirect:/users/login";
     model.addAttribute("user", user.getFullName() + '[' + user.getEmail() + ']');
     model.addAttribute("navigation", getNavigation());
-    model.addAttribute("cv", "C++, Java, Assembler.");
+    UserForm userForm = user.getUserForm();
+    model.addAttribute("from", user.getUserForm().getFrom());
+    model.addAttribute("education", user.getUserForm().getEducation());
+    model.addAttribute("experience", user.getUserForm().getExperience());
     model.addAttribute("recommendations", userFacade.listRecommendationsToUser(0L));
     return "home";
   }
@@ -129,12 +132,25 @@ public class UserController {
     return "redirect:/";
   }
 
-  @RequestMapping(value = "/editform", method = RequestMethod.GET)
-  public String editform(Model model) {
-    logger.log("editform");
+  @RequestMapping(value = "/editForm", method = RequestMethod.GET)
+  public String editForm(Model model) {
+    logger.log("editForm");
     User user = userFacade.getUserBySessionId(getSessionId());
     if (user == null)
-      return "redirect:/login";
-    return "redirect:/";
+      return "redirect:/users/login";
+    model.addAttribute("navigation", getNavigation());
+    model.addAttribute("userForm", new UserForm());
+    return "editForm";
+  }
+
+  @RequestMapping(value = "/editForm", method = RequestMethod.POST)
+  public String doEditForm(Model model, @ModelAttribute("userForm") UserForm userForm) {
+    logger.log("doEditForm");
+    User user = userFacade.getUserBySessionId(getSessionId());
+    System.out.println("userForm.getFrom(): " + userForm.getFrom());
+    System.out.println("userForm.getEducation(): " + userForm.getEducation());
+    System.out.println("userForm.getExperience(): " + userForm.getExperience());
+    user.userForm = userForm;
+    return "redirect:/users/home";
   }
 }

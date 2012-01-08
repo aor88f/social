@@ -2,7 +2,7 @@ package ru.hh.school.example.web;
 
 import ru.hh.school.example.Logger;
 
-public class UserFormForm {
+public class UserForm {
 
   private final Logger logger = new Logger(this);
   private String from;
@@ -14,7 +14,7 @@ public class UserFormForm {
     return from;
   }
 
-  public void setFrom(String email) {
+  public void setFrom(String from) {
     logger.log("setFrom");
     this.from = from;
   }
@@ -24,7 +24,7 @@ public class UserFormForm {
     return education;
   }
 
-  public void setEducation(String password) {
+  public void setEducation(String education) {
     logger.log("setEducation");
     this.education = education;
   }
@@ -34,7 +34,7 @@ public class UserFormForm {
     return experience;
   }
 
-  public void setExperience(String fullName) {
+  public void setExperience(String experience) {
     logger.log("setExperience");
     this.experience = experience;
   }

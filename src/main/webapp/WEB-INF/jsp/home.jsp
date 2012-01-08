@@ -8,17 +8,17 @@ ${navigation}
 <h2>Form</h2>
 <table border=1 cellpadding=5>
   <tr>
-    <td>From</td><td>asdf</td>
+    <td>From</td><td>${from}</td>
   </tr>
   <tr>
-    <td>Education</td><td>asd</td>
+    <td>Education</td><td>${education}</td>
   </tr>
   <tr>
-    <td>Experience</td><td>asdf</td>
+    <td>Experience</td><td>${experience}</td>
   </tr>
 </table>
 <tr>
-  <td><a href="editform">Edit</a></td>
+  <td><a href="editForm">Edit</a></td>
 </tr>
 
 <br>
