@@ -9,22 +9,22 @@ import java.util.Map;
 public class UserSessions implements Sessions {
     
   Logger logger = new Logger(this);    
-  Map sessionUserMap = new HashMap<Long, Long>();
+  Map sessionUserMap = new HashMap<String, Long>();
   
   @Override
-  public void login(long sessionId, long entityId) {
+  public void login(String sessionId, long entityId) {
     logger.log("login");
     sessionUserMap.put(sessionId, entityId);
   }
 
   @Override
-  public void logout(long sessionId) {
+  public void logout(String sessionId) {
     logger.log("logout");
     sessionUserMap.remove(sessionId);
   }
 
   @Override
-  public Long getEntityId(long sessionId) {
+  public Long getEntityId(String sessionId) {
     logger.log("getEntityId");
     return (Long)sessionUserMap.get(sessionId);
   }

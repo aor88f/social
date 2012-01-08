@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.RequestContextHolder;
 import ru.hh.school.example.Logger;
 import ru.hh.school.example.exceptions.login.LoginException;
 import ru.hh.school.example.exceptions.mail.EmailAlreadyBoundException;
@@ -27,9 +28,14 @@ public class UserController {
     log("UserController");
     this.userFacade = userFacade;
   }
+
+  protected String getSessionId() {
+    log("getSessionId");
+    return RequestContextHolder.currentRequestAttributes().getSessionId();
+  }
     
   protected String getNavigation() {
-      return "<a href=home>Home</a>  <a href=listUsers>Users</a>  <a href=logout>Logout</a>";
+    return "<a href=home>Home</a>  <a href=listUsers>Users</a>  <a href=logout>Logout</a>";
   }
 
   @RequestMapping(method = RequestMethod.GET)
