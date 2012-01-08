@@ -27,10 +27,15 @@ public class UserController {
     log("UserController");
     this.userFacade = userFacade;
   }
+    
+  protected String getNavigation() {
+      return "<a href=home>Home</a>  <a href=listUsers>Users</a>  <a href=logout>Logout</a>";
+  }
 
   @RequestMapping(method = RequestMethod.GET)
   public String list(Model model) {
     logger.log("list");
+    model.addAttribute("navigation", getNavigation());
     model.addAttribute("users", userFacade.listUsers());
     return "listUsers";
   }
