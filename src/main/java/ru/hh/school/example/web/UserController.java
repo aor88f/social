@@ -57,10 +57,12 @@ public class UserController {
                               userFormRegister.getPassword(),
                               userFormRegister.getFullName());
     } catch (InvalidEmailException e) {
+      model.addAttribute("var", "<a href=\"register\">Register</a>");
       model.addAttribute("error", "Email is not valid: " + e.getEmail());
       return "error";
     } catch (EmailAlreadyBoundException e) {
       model.addAttribute("error", "Email already bound: " + e.getEmail());
+      model.addAttribute("var", "<a href=\"register\">Register</a>");
       return "error";
     }
     return "redirect:/users";
@@ -73,6 +75,7 @@ public class UserController {
       userFacade.loginUser(userFormLogin.getEmail(), userFormLogin.getPassword());
     } catch (LoginException e) {
       model.addAttribute("error", "The username or password you entered is incorrect.");
+      model.addAttribute("var", "<a href=\"login\">Login</a>");
       return "error";
     }
     model.addAttribute("userFormLogin", new UserFormLogin());

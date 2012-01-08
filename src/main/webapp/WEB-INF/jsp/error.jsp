@@ -2,3 +2,4 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <h1>${error}</h1>
+${var}
