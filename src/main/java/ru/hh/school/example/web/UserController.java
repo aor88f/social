@@ -198,10 +198,10 @@ public class UserController {
       return "error";
     }
     RecommendationToUser recommendationToUser = new RecommendationToUser(
-                                                      recommendationForm.getUserId(),
+                                                      sessionUser.getId(),
                                                       recommendationForm.getText()
                                                       );
-    if (!userFacade.addRecommendationToUser(sessionUser.getId(), recommendationToUser));
+    if (!userFacade.addRecommendationToUser(userId, recommendationToUser));
     return "redirect:/users/user?id=" + userId;
   }
 }

@@ -39,10 +39,6 @@ public class UserFacade {
 
   public Iterable<RecommendationToUserEx> listRecommendationsToUserEx(long id) {
     logger.out("listRecommendationsToUser");
-    //List<RecommendationToUser> ret = new ArrayList<RecommendationToUser>();
-    //UserInfo ui = new UserInfo(new User("asdf", "asdf", "asdf@asdf.asdf"));
-    //ret.add(new RecommendationToUser(ui, "rec_text"));
-    //return ret;
     Iterable<RecommendationToUser> recs = userService.getUserById(id).getRecommendationsList();
     List<RecommendationToUserEx> recsEx = new ArrayList<RecommendationToUserEx>();
     for (RecommendationToUser rec : recs) {
@@ -81,6 +77,7 @@ public class UserFacade {
   }
 
   public boolean addRecommendationToUser(long userId, RecommendationToUser recommendationToUser) {
+    logger.out("addRecommendationToUser");
     return userService.addRecommendation(userId, recommendationToUser);
   }
 }
