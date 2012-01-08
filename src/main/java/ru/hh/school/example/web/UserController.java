@@ -128,4 +128,13 @@ public class UserController {
     userFacade.logoutUser(getSessionId());
     return "redirect:/";
   }
+
+  @RequestMapping(value = "/editform", method = RequestMethod.GET)
+  public String editform(Model model) {
+    logger.log("editform");
+    User user = userFacade.getUserBySessionId(getSessionId());
+    if (user == null)
+      return "redirect:/login";
+    return "redirect:/";
+  }
 }
