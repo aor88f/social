@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 @Component
 public class UserService {
 
+  private final Logger logger = new Logger(this);
   private final UserRepository users;
 
   @Autowired
@@ -20,6 +21,7 @@ public class UserService {
   }
 
     public User registerUser(String email, String password, String fullName) throws EmailAlreadyBoundException, InvalidEmailException {
+        logger.log("registerUser");
         if (!isValidEmail(email))
             throw new InvalidEmailException(email);
         User existing = users.byEmail(email);
@@ -31,6 +33,7 @@ public class UserService {
     }
 
     public User loginUser(String email, String password) throws LoginException {
+        logger.log("loginUser");
         User existing = users.byEmailPassword(email, password);
         if (existing == null)
             throw new LoginException(-1, email, password);
@@ -38,6 +41,7 @@ public class UserService {
     }
 
   public boolean isValidEmail(final String email) {
+      logger.log("email");
       final String EMAIL_PATTERN =
         "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
