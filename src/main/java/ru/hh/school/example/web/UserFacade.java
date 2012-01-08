@@ -1,6 +1,7 @@
 package ru.hh.school.example.web;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,7 @@ public class UserFacade {
     return users;
   }
 
-  public Iterable<RecommendationToUserEx> listRecommendationsToUserEx(long id) {
+  public Iterable<RecommendationToUserEx> listRecommendationsToUserExRev(long id) {
     logger.out("listRecommendationsToUser");
     Iterable<RecommendationToUser> recs = userService.getUserById(id).getRecommendationsList();
     List<RecommendationToUserEx> recsEx = new ArrayList<RecommendationToUserEx>();
@@ -48,6 +49,7 @@ public class UserFacade {
       RecommendationToUserEx recEx = new RecommendationToUserEx(userFromInfo, text);
       recsEx.add(recEx);
     }
+    Collections.reverse(recsEx);
     return recsEx;
   }
 

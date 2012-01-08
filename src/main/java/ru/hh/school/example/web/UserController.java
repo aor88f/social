@@ -118,7 +118,7 @@ public class UserController {
     model.addAttribute("user", sessionUser);
     model.addAttribute("navigation", getNavigation());
     model.addAttribute("userForm", sessionUser.getUserForm());
-    model.addAttribute("recommendations", userFacade.listRecommendationsToUserEx(sessionUser.getId()));
+    model.addAttribute("recommendations", userFacade.listRecommendationsToUserExRev(sessionUser.getId()));
     return "home";
   }
 
@@ -155,7 +155,7 @@ public class UserController {
     model.addAttribute("navigation", getNavigation());
     model.addAttribute("user", user);
     model.addAttribute("userForm", user.getUserForm());
-    model.addAttribute("recommendations", userFacade.listRecommendationsToUserEx(user.getId()));
+    model.addAttribute("recommendations", userFacade.listRecommendationsToUserExRev(user.getId()));
     return "user";
   }
 
@@ -168,7 +168,7 @@ public class UserController {
     User user = userFacade.getUserById(id);
     if (user == null) {
       model.addAttribute("navigation", getNavigation());
-      model.addAttribute("error", "UserID is incorrected: " + id);
+      model.addAttribute("error", "UserID is incorrect: " + id);
       return "error";
     }
     RecommendationForm recommendationForm = new RecommendationForm();
@@ -193,7 +193,7 @@ public class UserController {
     User user = userFacade.getUserById(userId);
     if (user == null) {
       model.addAttribute("navigation", getNavigation());
-      model.addAttribute("error", "UserID is incorrected: " + userId);
+      model.addAttribute("error", "UserID is incorrect: " + userId);
       model.addAttribute("var", "<a href=\"addRecommendation\">Back</a>");
       return "error";
     }

@@ -46,11 +46,11 @@ public class User extends Entity {
     logger.out("getUserForm");
     return userForm;
   }
-    
+
   public List<RecommendationToUser> getRecommendationsList() {
     return recommendationsList;
   }
-    
+
   public void addRecommendation(RecommendationToUser recommendationToUser) {
     recommendationsList.add(recommendationToUser);
   }
