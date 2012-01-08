@@ -40,18 +40,27 @@ public class UserController {
     return "listUsers";
   }
 
+  @RequestMapping(value = "/login", method = RequestMethod.POST)
+  public String doLogin(Model model, @ModelAttribute("userFormLogin") UserFormLogin userFormLogin) {
+    logger.log("doLogin");
+    try {
+      userFacade.loginUser(userFormLogin.getEmail(), userFormLogin.getPassword());
+    } catch (LoginException e) {
+      model.addAttribute("error", "The username or password you entered is incorrect.");
+      model.addAttribute("var", "<a href=\"login\">Login</a>");
+      return "error";
+    }
+    model.addAttribute("navigation", getNavigation());
+    model.addAttribute("cv", "C++, Java, Assembler.");
+    model.addAttribute("recommendations", userFacade.listRecommendationsToUser(0L));
+    return "home";
+  }
+
   @RequestMapping(value = "register", method = RequestMethod.GET)
   public String create(Model model) {
     logger.log("register");
     model.addAttribute("userFormRegister", new UserFormRegister());
     return "register";
-  }
-
-  @RequestMapping(value = "login", method = RequestMethod.GET)
-  public String login(Model model) {
-    logger.log("login");
-    model.addAttribute("userFormLogin", new UserFormLogin());
-    return "login";
   }
 
   @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -73,17 +82,17 @@ public class UserController {
     return "redirect:/users";
   }
 
-  @RequestMapping(value = "/login", method = RequestMethod.POST)
-  public String doLogin(Model model, @ModelAttribute("userFormLogin") UserFormLogin userFormLogin) {
-    logger.log("doLogin");
-    try {
-      userFacade.loginUser(userFormLogin.getEmail(), userFormLogin.getPassword());
-    } catch (LoginException e) {
-      model.addAttribute("error", "The username or password you entered is incorrect.");
-      model.addAttribute("var", "<a href=\"login\">Login</a>");
-      return "error";
-    }
+  @RequestMapping(value = "login", method = RequestMethod.GET)
+  public String login(Model model) {
+    logger.log("login");
     model.addAttribute("userFormLogin", new UserFormLogin());
-    return "redirect:/users";
+    return "login";
+  }
+
+  @RequestMapping(value = "home", method = RequestMethod.GET)
+  public String home(Model model) {
+    logger.log("home");
+    model.addAttribute("userFormLogin", new UserFormLogin());
+    return "login";
   }
 }

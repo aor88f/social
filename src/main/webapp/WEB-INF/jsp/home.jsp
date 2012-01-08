@@ -5,12 +5,12 @@ ${navigation}
 
 <h1>Users</h1>
 
-<h2>Резюме</h2>
+<h2>CV</h2>
 <h3>${cv}</h3>
 
 <ul>
   <c:forEach var="rec" items="${recommendations}">
-    <h2>${rec.fullName}[${rec.email}]</h2>
+    <h2>${rec.fromUserInfo.fullName}[${rec.fromUserInfo.email}]</h2>
     <h3>${rec.text}</h3>
   </c:forEach>
 </ul>

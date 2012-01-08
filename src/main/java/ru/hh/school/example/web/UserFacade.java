@@ -30,6 +30,13 @@ public class UserFacade {
     return users;
   }
 
+  public Iterable<RecommendationToUser> listRecommendationsToUser(long id) {
+    List<RecommendationToUser> ret = new ArrayList<RecommendationToUser>();
+    UserInfo ui = new UserInfo(new User("asdf", "asdf", "asdf@asdf.asdf"));
+    ret.add(new RecommendationToUser(ui, "rec_text"));
+    return ret;
+  }
+
   public Long registerUser(String email, String password, String fullName) throws EmailAlreadyBoundException, InvalidEmailException {
     return userService.registerUser(email, password, fullName).getId();
   }
