@@ -7,6 +7,6 @@ ${navigation}
 
 <ul>
   <c:forEach var="user" items="${users}">
-    <li>${user.fullName}[${user.email}]</li>
+    <li><a href="user?id=${user.id}">${user.fullName}[${user.email}]</a></li>
   </c:forEach>
 </ul>

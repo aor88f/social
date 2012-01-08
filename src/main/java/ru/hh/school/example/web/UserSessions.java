@@ -26,6 +26,9 @@ public class UserSessions implements Sessions {
   @Override
   public Long getEntityId(String sessionId) {
     logger.log("getEntityId");
+      logger.log("" + sessionUserMap.isEmpty());
+      logger.log("xxxxx");
+      logger.log(sessionId);
     return (Long)sessionUserMap.get(sessionId);
   }
 }

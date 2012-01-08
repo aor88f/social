@@ -3,7 +3,7 @@
 
 ${navigation}
 
-<h1>Home ${user}</h1>
+<h1>${user.fullName}[${user.email}]</h1>
 
 <h2>Form</h2>
 <table border=1 cellpadding=5>
@@ -17,9 +17,10 @@ ${navigation}
     <td>Experience</td><td>${userForm.experience}</td>
   </tr>
 </table>
-<tr>
-  <td><a href="editForm">Edit</a></td>
-</tr>
+
+<br>
+
+<a href=addRecommendation>Add recommendation</a>
 
 <br>
 

@@ -58,6 +58,11 @@ public class UserFacade {
     userService.logoutUser(sessionId);
   }
 
+  public User getUserById(long id) {
+    logger.log("getUserById");
+    return userService.getUserById(id);
+  }
+
   public User getUserBySessionId(String sessionId) {
     logger.log("getUserBySessionId");
     return userService.getUserBySessionId(sessionId);

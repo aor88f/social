@@ -20,6 +20,7 @@ public class UserService {
 
   @Autowired
   public UserService(UserRepository users) {
+    logger.log("UserService");
     this.users = users;
   }
 
@@ -43,20 +44,26 @@ public class UserService {
     userSessions.login(sessionId, existing.getId());
     return existing;
   }
-    
-  public User getUserBySessionId(String sessionId) {
-    return users.byId(userSessions.getEntityId(sessionId));
+
+  public User getUserById(Long id) {
+    logger.log("getUserById");
+    return users.byId(id);
+  }
+
+  public User getUserBySessionId(String session) {
+    logger.log("getUserBySessionId");
+    return getUserById(userSessions.getEntityId(session));
   }
     
   public void logoutUser(String sessionId) {
+    logger.log("logoutUser");
     userSessions.logout(sessionId);
   }
 
   public boolean isValidEmail(final String email) {
-    logger.log("email");
+    logger.log("isValidEmail");
     final String emailPattern =
       "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
     Pattern pattern = Pattern.compile(emailPattern);
     Matcher matcher = pattern.matcher(email);
     return matcher.matches();
