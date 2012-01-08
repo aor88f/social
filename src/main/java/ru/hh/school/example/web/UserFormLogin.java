@@ -9,22 +9,22 @@ public class UserFormLogin {
   private String password;
 
   public String getEmail() {
-    logger.log("getEmail");
+    logger.out("getEmail");
     return email;
   }
 
   public void setEmail(String email) {
-    logger.log("setEmail");
+    logger.out("setEmail");
     this.email = email;
   }
 
   public String getPassword() {
-    logger.log("getPassword");
+    logger.out("getPassword");
     return password;
   }
 
   public void setPassword(String password) {
-    logger.log("setPassword");
+    logger.out("setPassword");
     this.password = password;
   }
 }

@@ -11,24 +11,24 @@ public class UserInfo {
   private final String fullName;
 
   public UserInfo(User user) {
-    logger.log("UserInfo");
+    logger.out("UserInfo");
     this.id = user.getId();
     this.email = user.getEmail();
     this.fullName = user.getFullName();
   }
 
   public Long getId() {
-    logger.log("getId");
+    logger.out("getId");
     return id;
   }
 
   public String getEmail() {
-    logger.log("getEmail");
+    logger.out("getEmail");
     return email;
   }
 
   public String getFullName() {
-    logger.log("getFullName");
+    logger.out("getFullName");
     return fullName;
   }
 }

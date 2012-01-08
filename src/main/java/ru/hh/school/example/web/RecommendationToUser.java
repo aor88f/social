@@ -10,18 +10,18 @@ public class RecommendationToUser {
   private final String text;
 
   public RecommendationToUser(UserInfo fromUserInfo, String text) {
-    logger.log("RecommendationToUser");
+    logger.out("RecommendationToUser");
     this.fromUserInfo = fromUserInfo;
     this.text = text;
   }
 
   public UserInfo getFromUserInfo() {
-    logger.log("getFromUserInfo");
+    logger.out("getFromUserInfo");
     return fromUserInfo;
   }
 
   public String getText() {
-    logger.log("getText");
+    logger.out("getText");
     return text;
   }
 }

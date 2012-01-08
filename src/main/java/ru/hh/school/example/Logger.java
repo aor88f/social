@@ -9,7 +9,7 @@ public class Logger {
       s = s.substring(dotLastIndex + 1);
   }
     
-  public void log(String s) {
+  public void out(String s) {
     System.out.println(this.s + "." + s);
   }
 }

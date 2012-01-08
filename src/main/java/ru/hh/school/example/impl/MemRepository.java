@@ -15,23 +15,23 @@ public abstract class MemRepository<T extends Entity> implements Repository<T> {
   private Long counter = 0L;
 
   public void put(T entity) {
-    logger.log("put");
+    logger.out("put");
     entity.setId(++counter);
     identityMap.put(entity.getId(), entity);
   }
 
   public T byId(Long id) {
-    logger.log("byId");
+    logger.out("byId");
     return identityMap.get(id);
   }
 
   public void remove(T entity) {
-    logger.log("remove");
+    logger.out("remove");
     identityMap.remove(entity.getId());
   }
 
   public Iterable<T> all() {
-    logger.log("all");
+    logger.out("all");
     return identityMap.values();
   }
 }

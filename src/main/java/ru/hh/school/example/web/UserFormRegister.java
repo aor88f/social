@@ -10,32 +10,32 @@ public class UserFormRegister {
   private String fullName;
 
   public String getEmail() {
-    logger.log("getEmail");
+    logger.out("getEmail");
     return email;
   }
 
   public void setEmail(String email) {
-    logger.log("setEmail");
+    logger.out("setEmail");
     this.email = email;
   }
 
   public String getPassword() {
-    logger.log("getPassword");
+    logger.out("getPassword");
     return password;
   }
 
   public void setPassword(String password) {
-    logger.log("setPassword");
+    logger.out("setPassword");
     this.password = password;
   }
 
   public String getFullName() {
-    logger.log("getFullName");
+    logger.out("getFullName");
     return fullName;
   }
 
   public void setFullName(String fullName) {
-    logger.log("setFullName");
+    logger.out("setFullName");
     this.fullName = fullName;
   }
 }

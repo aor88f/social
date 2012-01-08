@@ -13,22 +13,22 @@ public class UserSessions implements Sessions {
   
   @Override
   public void login(String sessionId, long entityId) {
-    logger.log("login");
+    logger.out("login");
     sessionUserMap.put(sessionId, entityId);
   }
 
   @Override
   public void logout(String sessionId) {
-    logger.log("logout");
+    logger.out("logout");
     sessionUserMap.remove(sessionId);
   }
 
   @Override
   public Long getEntityId(String sessionId) {
-    logger.log("getEntityId");
-      logger.log("" + sessionUserMap.isEmpty());
-      logger.log("xxxxx");
-      logger.log(sessionId);
+    logger.out("getEntityId");
+      logger.out("" + sessionUserMap.isEmpty());
+      logger.out("xxxxx");
+      logger.out(sessionId);
     return (Long)sessionUserMap.get(sessionId);
   }
 }

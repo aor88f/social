@@ -12,7 +12,7 @@ public class MemUserRepository extends MemRepository<User> implements UserReposi
   private final Logger logger = new Logger(this);
     
   public User byEmail(String email) {
-    logger.log("byEmail");
+    logger.out("byEmail");
     for (User user : all())
       if (user.getEmail().equals(email))
         return user;
@@ -20,7 +20,7 @@ public class MemUserRepository extends MemRepository<User> implements UserReposi
   }
 
   public User byIdPassword(Long id, String password) throws LoginException {
-    logger.log("byIdPassword");
+    logger.out("byIdPassword");
     User user = byId(id);
     if (user == null || !password.equals(user.getPassword())) {
       throw new LoginException(id, null, password);
@@ -29,7 +29,7 @@ public class MemUserRepository extends MemRepository<User> implements UserReposi
   }
 
   public User byEmailPassword(String email, String password) throws LoginException {
-    logger.log("byEmailPassword");
+    logger.out("byEmailPassword");
     User user = byEmail(email);
     if (user == null || !password.equals(user.getPassword())) {
       throw new LoginException(-1, email, password);

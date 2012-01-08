@@ -22,13 +22,13 @@ public class UserFacade {
 
   @Autowired
   public UserFacade(UserRepository users, UserService userService) {
-    logger.log("UserFacade");
+    logger.out("UserFacade");
     this.users = users;
     this.userService = userService;
   }
 
   public Iterable<UserInfo> listUsers() {
-    logger.log("listUsers");
+    logger.out("listUsers");
     List<UserInfo> users = new ArrayList<UserInfo>();
     for (User user : this.users.all())
       users.add(new UserInfo(user));
@@ -36,7 +36,7 @@ public class UserFacade {
   }
 
   public Iterable<RecommendationToUser> listRecommendationsToUser(long id) {
-    logger.log("listRecommendationsToUser");
+    logger.out("listRecommendationsToUser");
     List<RecommendationToUser> ret = new ArrayList<RecommendationToUser>();
     UserInfo ui = new UserInfo(new User("asdf", "asdf", "asdf@asdf.asdf"));
     ret.add(new RecommendationToUser(ui, "rec_text"));
@@ -44,27 +44,27 @@ public class UserFacade {
   }
 
   public Long registerUser(String email, String password, String fullName) throws EmailAlreadyBoundException, InvalidEmailException {
-    logger.log("registerUser");
+    logger.out("registerUser");
     return userService.registerUser(email, password, fullName).getId();
   }
 
   public Long loginUser(String email, String password, String sessionId) throws LoginException {
-    logger.log("loginUser");
+    logger.out("loginUser");
     return userService.loginUser(email, password, sessionId).getId();
   }
 
   public void logoutUser(String sessionId) {
-    logger.log("logoutUser");
+    logger.out("logoutUser");
     userService.logoutUser(sessionId);
   }
 
   public User getUserById(long id) {
-    logger.log("getUserById");
+    logger.out("getUserById");
     return userService.getUserById(id);
   }
 
   public User getUserBySessionId(String sessionId) {
-    logger.log("getUserBySessionId");
+    logger.out("getUserBySessionId");
     return userService.getUserBySessionId(sessionId);
   }
 }

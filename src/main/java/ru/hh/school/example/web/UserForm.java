@@ -10,32 +10,32 @@ public class UserForm {
   private String experience;
 
   public String getFrom() {
-    logger.log("getFrom");
+    logger.out("getFrom");
     return from;
   }
 
   public void setFrom(String from) {
-    logger.log("setFrom");
+    logger.out("setFrom");
     this.from = from;
   }
 
   public String getEducation() {
-    logger.log("getEducation");
+    logger.out("getEducation");
     return education;
   }
 
   public void setEducation(String education) {
-    logger.log("setEducation");
+    logger.out("setEducation");
     this.education = education;
   }
 
   public String getExperience() {
-    logger.log("getExperience");
+    logger.out("getExperience");
     return experience;
   }
 
   public void setExperience(String experience) {
-    logger.log("setExperience");
+    logger.out("setExperience");
     this.experience = experience;
   }
 }

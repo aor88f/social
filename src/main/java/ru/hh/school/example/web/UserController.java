@@ -23,35 +23,35 @@ public class UserController {
 
   @Autowired
   public UserController(UserFacade userFacade) {
-    logger.log("UserController");
+    logger.out("UserController");
     this.userFacade = userFacade;
   }
 
   protected String getSessionId() {
     String ret = RequestContextHolder.currentRequestAttributes().getSessionId();
-    logger.log("getSessionId: " + ret);
+    logger.out("getSessionId: " + ret);
     return ret;
   }
 
   protected String getNavigation() {
-    logger.log("getNavigation");
+    logger.out("getNavigation");
     return (userFacade.getUserBySessionId(getSessionId()) == null) ? getNavigationNotLoginned()
                                                                    : getNavigationLoginned();
   }
 
   protected String getNavigationLoginned() {
-    logger.log("getNavigationLoginned");
+    logger.out("getNavigationLoginned");
     return "<a href=home>Home</a>  <a href=listUsers>Users</a>  <a href=logout>Logout</a>";
   }
 
   protected String getNavigationNotLoginned() {
-    logger.log("getNavigationNotLoginned");
+    logger.out("getNavigationNotLoginned");
     return "<a href=listUsers>Users</a>  <a href=login>Login</a>  <a href=register>Register</a>";
   }
 
   @RequestMapping(value = "/listUsers", method = RequestMethod.GET)
   public String list(Model model) {
-    logger.log("list");
+    logger.out("list");
     model.addAttribute("navigation", getNavigation());
     model.addAttribute("users", userFacade.listUsers());
     return "listUsers";
@@ -59,7 +59,7 @@ public class UserController {
 
   @RequestMapping(value = "/login", method = RequestMethod.GET)
   public String login(Model model) {
-    logger.log("login");
+    logger.out("login");
     model.addAttribute("navigation", getNavigation());
     model.addAttribute("userFormLogin", new UserFormLogin());
     return "login";
@@ -67,7 +67,7 @@ public class UserController {
 
   @RequestMapping(value = "/login", method = RequestMethod.POST)
   public String doLogin(Model model, @ModelAttribute("userFormLogin") UserFormLogin userFormLogin) {
-    logger.log("doLogin");
+    logger.out("doLogin");
     try {
       userFacade.loginUser(userFormLogin.getEmail(), userFormLogin.getPassword(), getSessionId());
     } catch (LoginException e) {
@@ -82,7 +82,7 @@ public class UserController {
 
   @RequestMapping(value = "/register", method = RequestMethod.GET)
   public String create(Model model) {
-    logger.log("register");
+    logger.out("register");
     model.addAttribute("navigation", getNavigation());
     model.addAttribute("userFormRegister", new UserFormRegister());
     return "register";
@@ -90,7 +90,7 @@ public class UserController {
 
   @RequestMapping(value = "/register", method = RequestMethod.POST)
   public String doCreate(Model model, @ModelAttribute("userFormRegister") UserFormRegister userFormRegister) {
-    logger.log("doCreate");
+    logger.out("doCreate");
     try {
       userFacade.registerUser(userFormRegister.getEmail(),
                               userFormRegister.getPassword(),
@@ -111,7 +111,7 @@ public class UserController {
 
   @RequestMapping(value = "/home", method = RequestMethod.GET)
   public String home(Model model) {
-    logger.log("home");
+    logger.out("home");
     User user = userFacade.getUserBySessionId(getSessionId());
     if (user == null)
       return "redirect:/users/login";
@@ -123,14 +123,14 @@ public class UserController {
 
   @RequestMapping(value = "/logout", method = RequestMethod.GET)
   public String logout(Model model) {
-    logger.log("logout");
+    logger.out("logout");
     userFacade.logoutUser(getSessionId());
     return "redirect:/";
   }
 
   @RequestMapping(value = "/editForm", method = RequestMethod.GET)
   public String editForm(Model model) {
-    logger.log("editForm");
+    logger.out("editForm");
     User user = userFacade.getUserBySessionId(getSessionId());
     if (user == null)
       return "redirect:/users/login";
@@ -141,7 +141,7 @@ public class UserController {
 
   @RequestMapping(value = "/editForm", method = RequestMethod.POST)
   public String doEditForm(Model model, @ModelAttribute("userForm") UserForm userForm) {
-    logger.log("doEditForm");
+    logger.out("doEditForm");
     User user = userFacade.getUserBySessionId(getSessionId());
     user.setUserForm(userForm);
     return "redirect:/users/home";
@@ -149,7 +149,7 @@ public class UserController {
 
   @RequestMapping(value = "/user", method = RequestMethod.GET)
   public String user(Model model, @RequestParam("id") long id) {
-    logger.log("user?id=" + id);
+    logger.out("user?id=" + id);
     User user = userFacade.getUserById(id);
     model.addAttribute("navigation", getNavigation());
     model.addAttribute("user", user);

@@ -12,7 +12,7 @@ public class User extends Entity {
   private UserForm userForm = new UserForm();
 
   public User(String email, String password, String fullName) {
-    logger.log("User");
+    logger.out("User");
     this.email = email;
     this.password = password;
     this.fullName = fullName;
@@ -23,22 +23,22 @@ public class User extends Entity {
   }
 
   public String getEmail() {
-    logger.log("getEmail");
+    logger.out("getEmail");
     return email;
   }
 
   public String getPassword() {
-    logger.log("getPassword");
+    logger.out("getPassword");
     return password;
   }
 
   public String getFullName() {
-    logger.log("getFullName");
+    logger.out("getFullName");
     return fullName;
   }
 
   public UserForm getUserForm() {
-    logger.log("getUserForm");
+    logger.out("getUserForm");
     return userForm;
   }
 }
