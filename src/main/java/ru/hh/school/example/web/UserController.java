@@ -253,23 +253,4 @@ public class UserController {
     model.addAttribute("requesterUser", sessionUser);
     return "requestRecommendation";
   }
-
-
-
-
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String test(Model model) {
-        try {
-            userFacade.registerUser("aa@aa.aa","","Aaa");
-            userFacade.registerUser("bb@bb.bb","","Bbb");
-            userFacade.registerUser("cc@cc.cc","","Ccc");
-            userFacade.registerUser("dd@dd.dd","","Ddd");
-        return "home";
-        } catch (EmailAlreadyBoundException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (InvalidEmailException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        return "redirect:/users/home";
-    }
 }
