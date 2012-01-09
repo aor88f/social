@@ -52,18 +52,22 @@ public class User extends Entity {
   }
 
   public List<RecommendationToUser> getRecommendationsList() {
+    logger.out("getRecommendationsList");
     return recommendationsList;
   }
 
   public void addRecommendation(RecommendationToUser recommendationToUser) {
+    logger.out("addRecommendation");
     recommendationsList.add(recommendationToUser);
   }
 
   public void addRecommendationRequest(RecommendationRequest recommendationRequest) {
+    logger.out("addRecommendationRequest");
     recommendationRequestsList.add(recommendationRequest);
   }
 
   public LinkedHashSet<RecommendationRequest> getRecommendationsRequestsList() {
+    logger.out("getRecommendationsRequestsList");
     return recommendationRequestsList;
   }
 }

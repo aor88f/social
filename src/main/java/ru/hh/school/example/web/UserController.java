@@ -205,4 +205,19 @@ public class UserController {
     if (!userFacade.addRecommendationToUser(userId, recommendationToUser));
     return "redirect:/users/user?id=" + userId;
   }
+
+
+  @RequestMapping(value = "/requestForRecommendation", method = RequestMethod.GET)
+  public String user(Model model, @RequestParam("fromId") long fromId, @RequestParam("toId") long toId) {
+    logger.out("requestForRecommendation?fromId=" + fromId + "&toId=" + toId);
+    User sessionUser = userFacade.getUserBySessionId(getSessionId());
+    if (sessionUser == null)
+      return "redirect:/users/login";
+    //model.addAttribute("navigation", getNavigation());
+    //model.addAttribute("user", user);
+    //model.addAttribute("userForm", user.getUserForm());
+    //model.addAttribute("recommendations", userFacade.listRecommendationsToUserExRev(user.getId()));
+    userFacade.addRecommendationRequest(sessionUser.getId(), fromId, toId);
+    return "home";
+  }
 }

@@ -53,7 +53,7 @@ public class UserFacade {
   }
 
   public Iterable<RecommendationRequestEx> listRecommendationRequestsExRev(long id) {
-    logger.out("listRecommendationsToUser");
+    logger.out("listRecommendationRequestsExRev");
     LinkedHashSet<RecommendationRequest> recommendationRequestList = userService.getUserById(id).getRecommendationsRequestsList();
     LinkedList<RecommendationRequestEx> ret = new LinkedList<RecommendationRequestEx>();
     for (RecommendationRequest recReq : recommendationRequestList) {
@@ -98,6 +98,7 @@ public class UserFacade {
   }
 
   public void addRecommendationRequest(long requesterId, long fromId, long toId) {
+    logger.out("addRecommendationRequest");
     getUserById(requesterId).addRecommendationRequest(new RecommendationRequest(fromId, toId));
   }
 }
