@@ -31,10 +31,7 @@ ${navigation}
   <c:forEach var="recReq" items="${recommendationRequests}">
     <table border=1 cellpadding=5 width=320>
       <tr>
-        <td><a href="requestForRecommendation?fromId=${recReq.fromUserInfo.id}&toId=${reqReq.toUserInfo.id}">From ${rec.fromUserInfo.email} to From ${rec.toUserInfo.email}</a></td>
-      </tr>
-      <tr>
-        <td>${rec.text}</td>
+        <td><a href="requestForRecommendation?fromId=${user.id}&toId=${reqReq.toUserInfo.id}">Recommend ${recReq.toUserInfo.email}</a> (Requester: ${recReq.requesterUserInfo.email})</td>
       </tr>
     </table>
     <br>

@@ -213,11 +213,26 @@ public class UserController {
     User sessionUser = userFacade.getUserBySessionId(getSessionId());
     if (sessionUser == null)
       return "redirect:/users/login";
-    //model.addAttribute("navigation", getNavigation());
-    //model.addAttribute("user", user);
-    //model.addAttribute("userForm", user.getUserForm());
-    //model.addAttribute("recommendations", userFacade.listRecommendationsToUserExRev(user.getId()));
     userFacade.addRecommendationRequest(sessionUser.getId(), fromId, toId);
-    return "home";
+    return "redirect:/users/home";
   }
+
+
+
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String user(Model model) {
+        try {
+            userFacade.registerUser("aa@aa.ru","","");
+            userFacade.registerUser("bb@bb.ru","","");
+            userFacade.registerUser("cc@cc.ru","","");
+            userFacade.registerUser("dd@dd.ru","","");
+        return "home";
+        } catch (EmailAlreadyBoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (InvalidEmailException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return "redirect:/users/home";
+    }
 }

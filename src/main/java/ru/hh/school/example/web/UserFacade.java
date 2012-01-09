@@ -57,11 +57,11 @@ public class UserFacade {
     LinkedHashSet<RecommendationRequest> recommendationRequestList = userService.getUserById(id).getRecommendationsRequestsList();
     LinkedList<RecommendationRequestEx> ret = new LinkedList<RecommendationRequestEx>();
     for (RecommendationRequest recReq : recommendationRequestList) {
-      User userFrom = getUserById(recReq.getFromId());
-      User userTo = getUserById(recReq.getToId());
-      UserInfo fromUserInfo = new UserInfo(userFrom);
-      UserInfo toUserInfo = new UserInfo(userTo);
-      RecommendationRequestEx recReqEx = new RecommendationRequestEx(fromUserInfo, toUserInfo);
+      User requesterUser = getUserById(recReq.getRequesterId());
+      User toUser = getUserById(recReq.getToId());
+      UserInfo requesterUserInfo = new UserInfo(requesterUser);
+      UserInfo toUserInfo = new UserInfo(toUser);
+      RecommendationRequestEx recReqEx = new RecommendationRequestEx(requesterUserInfo, toUserInfo);
       ret.addFirst(recReqEx);
     }
     return ret;
@@ -99,6 +99,6 @@ public class UserFacade {
 
   public void addRecommendationRequest(long requesterId, long fromId, long toId) {
     logger.out("addRecommendationRequest");
-    getUserById(requesterId).addRecommendationRequest(new RecommendationRequest(fromId, toId));
+    getUserById(fromId).addRecommendationRequest(new RecommendationRequest(requesterId, toId));
   }
 }
