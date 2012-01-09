@@ -82,4 +82,8 @@ public class UserFacade {
     logger.out("addRecommendationToUser");
     return userService.addRecommendation(userId, recommendationToUser);
   }
+
+  public void addRecommendationRequest(long requesterId, long fromId, long toId) {
+    getUserById(requesterId).addRecommendationRequest(new RecommendationRequest(fromId, toId));
+  }
 }
