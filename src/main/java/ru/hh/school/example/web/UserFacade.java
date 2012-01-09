@@ -52,7 +52,7 @@ public class UserFacade {
     return recsEx;
   }
 
-  public Iterable<RecommendationRequestEx> listRecommendationRequests(long id) {
+  public Iterable<RecommendationRequestEx> listRecommendationRequestsExRev(long id) {
     logger.out("listRecommendationsToUser");
     LinkedHashSet<RecommendationRequest> recommendationRequestList = userService.getUserById(id).getRecommendationsRequestsList();
     LinkedList<RecommendationRequestEx> ret = new LinkedList<RecommendationRequestEx>();
