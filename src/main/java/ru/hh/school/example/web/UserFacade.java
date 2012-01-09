@@ -52,12 +52,18 @@ public class UserFacade {
     return recsEx;
   }
 
-  public Iterable<RecommendationRequest> listRecommendationRequests(long id) {
+  public Iterable<RecommendationRequestEx> listRecommendationRequests(long id) {
     logger.out("listRecommendationsToUser");
     LinkedHashSet<RecommendationRequest> recommendationRequestList = userService.getUserById(id).getRecommendationsRequestsList();
-    LinkedList<RecommendationRequest> ret = new LinkedList<RecommendationRequest>();
-    for (RecommendationRequest recReq : recommendationRequestList)
-      ret.addFirst(recReq);
+    LinkedList<RecommendationRequestEx> ret = new LinkedList<RecommendationRequestEx>();
+    for (RecommendationRequest recReq : recommendationRequestList) {
+      User userFrom = getUserById(recReq.getFromId());
+      User userTo = getUserById(recReq.getToId());
+      UserInfo fromUserInfo = new UserInfo(userFrom);
+      UserInfo toUserInfo = new UserInfo(userTo);
+      RecommendationRequestEx recReqEx = new RecommendationRequestEx(fromUserInfo, toUserInfo);
+      ret.addFirst(recReqEx);
+    }
     return ret;
   }
 
