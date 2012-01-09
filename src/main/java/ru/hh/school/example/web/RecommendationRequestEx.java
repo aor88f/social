@@ -4,7 +4,7 @@ public class RecommendationRequestEx {
   private final UserInfo requesterUserInfo;
   private final UserInfo toUserInfo;
 
-  RecommendationRequestEx(UserInfo requesterUserInfo, UserInfo toUserInfo) {
+  public RecommendationRequestEx(UserInfo requesterUserInfo, UserInfo toUserInfo) {
     this.requesterUserInfo = requesterUserInfo;
     this.toUserInfo = toUserInfo;
   }

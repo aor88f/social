@@ -5,7 +5,11 @@ import ru.hh.school.example.UserRepository;
 import ru.hh.school.example.UserService;
 import ru.hh.school.example.exceptions.login.LoginException;
 import ru.hh.school.example.impl.MemUserRepository;
+import ru.hh.school.example.web.RecommendationRequestEx;
+import ru.hh.school.example.web.RecommendationToUserEx;
 import ru.hh.school.example.web.UserFacade;
+
+import java.util.Collections;
 
 public class UserFacadeTest extends junit.framework.TestCase {
   private UserRepository userRepository = new MemUserRepository();
@@ -59,7 +63,7 @@ public class UserFacadeTest extends junit.framework.TestCase {
         assertEquals("bb@bb.bb", userFacade.getUserById(2).getEmail());
         assertEquals("cc@cc.cc", userFacade.getUserById(3).getEmail());
     }
-    
+
     public void testGetUserBySessionId() throws Exception {
         assertNull(userFacade.getUserBySessionId("sessionId1"));
         assertNull(userFacade.getUserBySessionId("sessionId2"));
@@ -76,5 +80,27 @@ public class UserFacadeTest extends junit.framework.TestCase {
 
         assertNull(userFacade.getUserBySessionId("sessionId1"));
         assertEquals("bbb@bb.bb", userFacade.getUserBySessionId("sessionId2").getEmail());
+    }      
+    
+    public void testAddRecommendationRequest() throws Exception {
+        userFacade.registerUser("aaaa@aa.aa", "", "");
+        userFacade.registerUser("bbbb@bb.bb", "", "");
+        userFacade.registerUser("cccc@bb.bb", "", "");
+
+        userFacade.addRecommendationRequest(1, 2, 3);
+        assertEquals(1, count(userFacade.listRecommendationRequestsExRev(2)));
+
+        userFacade.addRecommendationRequest(3, 2, 1);
+        assertEquals(2, count(userFacade.listRecommendationRequestsExRev(2)));
+
+        userFacade.removeRequest(1, 2, 3);
+        assertEquals(1, count(userFacade.listRecommendationRequestsExRev(2)));
+    }
+
+    protected long count(Iterable<RecommendationRequestEx>/*<T>*/ iterable) {
+        long ret = 0;
+        for (RecommendationRequestEx req : iterable)
+            ++ret;
+        return ret;
     }
 }
