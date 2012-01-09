@@ -70,4 +70,9 @@ public class User extends Entity {
     logger.out("getRecommendationsRequestsList");
     return recommendationRequestsList;
   }
+
+  public void removeRecommendationRequest(RecommendationRequest recommendationRequest) {
+    logger.out("removeRecommendationRequest");
+    recommendationRequestsList.remove(recommendationRequest);
+  }
 }

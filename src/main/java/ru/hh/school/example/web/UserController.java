@@ -164,6 +164,11 @@ public class UserController {
   public String addRecommendationForRequester(Model model, @RequestParam("id") long id,
                                                            @RequestParam("requesterId") long requesterId) {
     logger.out("addRecommendationForRequester?id=" + id + "&requesterId=" + requesterId);
+    User sessionUser = userFacade.getUserBySessionId(getSessionId());
+    if (sessionUser == null)
+      return "redirect:/users/login";
+    RecommendationRequest recReq = new RecommendationRequest(requesterId, id);
+    userFacade.removeRequest(requesterId, sessionUser.getId(), id);
     return addRecommendation(model, id);
   }
 

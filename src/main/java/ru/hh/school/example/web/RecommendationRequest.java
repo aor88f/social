@@ -4,8 +4,8 @@ public class RecommendationRequest {
   private long requesterId;
   private long toId;
 
-  RecommendationRequest(long fromId, long toId) {
-    this.requesterId = fromId;
+  RecommendationRequest(long requesterId, long toId) {
+    this.requesterId = requesterId;
     this.toId = toId;
   }
 

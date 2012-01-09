@@ -101,4 +101,9 @@ public class UserFacade {
     logger.out("addRecommendationRequest");
     getUserById(fromId).addRecommendationRequest(new RecommendationRequest(requesterId, toId));
   }
+
+  public void removeRequest(long requesterId, long fromId, long toId) {
+    logger.out("removeRequest");
+    getUserById(fromId).removeRecommendationRequest(new RecommendationRequest(requesterId, toId));
+  }
 }
