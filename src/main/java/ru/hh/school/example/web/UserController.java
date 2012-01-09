@@ -160,9 +160,16 @@ public class UserController {
     return "user";
   }
 
+  @RequestMapping(value = "/addRecommendationForRequester", method = RequestMethod.GET)
+  public String addRecommendationForRequester(Model model, @RequestParam("id") long id,
+                                                           @RequestParam("requesterId") long requesterId) {
+    logger.out("addRecommendationForRequester?id=" + id + "&requesterId=" + requesterId);
+    return addRecommendation(model, id);
+  }
+
   @RequestMapping(value = "/addRecommendation", method = RequestMethod.GET)
   public String addRecommendation(Model model, @RequestParam("id") long id) {
-    logger.out("addRecommendation");
+    logger.out("addRecommendation?id=" + id);
     User sessionUser = userFacade.getUserBySessionId(getSessionId());
     if (sessionUser == null)
       return "redirect:/users/login";
