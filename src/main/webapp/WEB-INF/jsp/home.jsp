@@ -25,6 +25,22 @@ ${navigation}
 
 <br>
 
+<h2>Requests for recommendations</h2>
+
+<ul>
+  <c:forEach var="recReq" items="${recommendationRequests}">
+    <table border=1 cellpadding=5 width=320>
+      <tr>
+        <td><a href="requestForRecommendation?fromId=${recReq.fromUserInfo.id}&toId=${reqReq.toUserInfo.id}">From ${rec.fromUserInfo.email} to From ${rec.toUserInfo.email}</a></td>
+      </tr>
+      <tr>
+        <td>${rec.text}</td>
+      </tr>
+    </table>
+    <br>
+  </c:forEach>
+</ul>
+
 <h2>Recommendations</h2>
 
 <ul>
