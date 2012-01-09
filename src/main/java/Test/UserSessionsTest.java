@@ -3,13 +3,6 @@ package Test;
 import junit.framework.TestCase;
 import ru.hh.school.example.web.UserSessions;
 
-/**
- * Created by IntelliJ IDEA.
- * User: root
- * Date: 1/9/12
- * Time: 9:47 PM
- * To change this template use File | Settings | File Templates.
- */
 public class UserSessionsTest extends TestCase {
     private UserSessions userSessions = new UserSessions();
     
