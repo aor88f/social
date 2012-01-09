@@ -118,6 +118,7 @@ public class UserController {
     model.addAttribute("user", sessionUser);
     model.addAttribute("navigation", getNavigation());
     model.addAttribute("userForm", sessionUser.getUserForm());
+    model.addAttribute("recommendationRequests", userFacade.listRecommendationRequestsExRev(sessionUser.getId()));
     model.addAttribute("recommendations", userFacade.listRecommendationsToUserExRev(sessionUser.getId()));
     return "home";
   }
