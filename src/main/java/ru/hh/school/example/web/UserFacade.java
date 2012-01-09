@@ -29,44 +29,6 @@ public class UserFacade {
     this.userService = userService;
   }
 
-  public Iterable<UserInfo> listUsers() {
-    logger.out("listUsers");
-    List<UserInfo> users = new ArrayList<UserInfo>();
-    for (User user : this.users.all())
-      users.add(new UserInfo(user));
-    return users;
-  }
-
-  public Iterable<RecommendationToUserEx> listRecommendationsToUserExRev(long id) {
-    logger.out("listRecommendationsToUser");
-    Iterable<RecommendationToUser> recs = userService.getUserById(id).getRecommendationsList();
-    List<RecommendationToUserEx> recsEx = new ArrayList<RecommendationToUserEx>();
-    for (RecommendationToUser rec : recs) {
-      User userFrom = getUserById(rec.getFromUserId());
-      UserInfo userFromInfo = new UserInfo(userFrom);
-      String text = rec.getText();
-      RecommendationToUserEx recEx = new RecommendationToUserEx(userFromInfo, text);
-      recsEx.add(recEx);
-    }
-    Collections.reverse(recsEx);
-    return recsEx;
-  }
-
-  public Iterable<RecommendationRequestEx> listRecommendationRequestsExRev(long id) {
-    logger.out("listRecommendationRequestsExRev");
-    LinkedHashSet<RecommendationRequest> recommendationRequestList = userService.getUserById(id).getRecommendationsRequestsList();
-    LinkedList<RecommendationRequestEx> ret = new LinkedList<RecommendationRequestEx>();
-    for (RecommendationRequest recReq : recommendationRequestList) {
-      User requesterUser = getUserById(recReq.getRequesterId());
-      User toUser = getUserById(recReq.getToId());
-      UserInfo requesterUserInfo = new UserInfo(requesterUser);
-      UserInfo toUserInfo = new UserInfo(toUser);
-      RecommendationRequestEx recReqEx = new RecommendationRequestEx(requesterUserInfo, toUserInfo);
-      ret.addFirst(recReqEx);
-    }
-    return ret;
-  }
-
   public Long registerUser(String email, String password, String fullName) throws EmailAlreadyBoundException, InvalidEmailException {
     logger.out("registerUser");
     return userService.registerUser(email, password, fullName).getId();
@@ -105,5 +67,43 @@ public class UserFacade {
   public void removeRequest(long requesterId, long fromId, long toId) {
     logger.out("removeRequest");
     getUserById(fromId).removeRecommendationRequest(new RecommendationRequest(requesterId, toId));
+  }
+
+  public Iterable<UserInfo> listUsers() {
+    logger.out("listUsers");
+    List<UserInfo> users = new ArrayList<UserInfo>();
+    for (User user : this.users.all())
+      users.add(new UserInfo(user));
+    return users;
+  }
+
+  public Iterable<RecommendationToUserEx> listRecommendationsToUserExRev(long id) {
+    logger.out("listRecommendationsToUser");
+    Iterable<RecommendationToUser> recs = userService.getUserById(id).getRecommendationsList();
+    List<RecommendationToUserEx> recsEx = new ArrayList<RecommendationToUserEx>();
+    for (RecommendationToUser rec : recs) {
+      User userFrom = getUserById(rec.getFromUserId());
+      UserInfo userFromInfo = new UserInfo(userFrom);
+      String text = rec.getText();
+      RecommendationToUserEx recEx = new RecommendationToUserEx(userFromInfo, text);
+      recsEx.add(recEx);
+    }
+    Collections.reverse(recsEx);
+    return recsEx;
+  }
+
+  public Iterable<RecommendationRequestEx> listRecommendationRequestsExRev(long id) {
+    logger.out("listRecommendationRequestsExRev");
+    LinkedHashSet<RecommendationRequest> recommendationRequestList = userService.getUserById(id).getRecommendationsRequestsList();
+    LinkedList<RecommendationRequestEx> ret = new LinkedList<RecommendationRequestEx>();
+    for (RecommendationRequest recReq : recommendationRequestList) {
+      User requesterUser = getUserById(recReq.getRequesterId());
+      User toUser = getUserById(recReq.getToId());
+      UserInfo requesterUserInfo = new UserInfo(requesterUser);
+      UserInfo toUserInfo = new UserInfo(toUser);
+      RecommendationRequestEx recReqEx = new RecommendationRequestEx(requesterUserInfo, toUserInfo);
+      ret.addFirst(recReqEx);
+    }
+    return ret;
   }
 }

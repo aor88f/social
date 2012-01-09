@@ -160,18 +160,6 @@ public class UserController {
     return "user";
   }
 
-  @RequestMapping(value = "/addRecommendationForRequester", method = RequestMethod.GET)
-  public String addRecommendationForRequester(Model model, @RequestParam("id") long id,
-                                                           @RequestParam("requesterId") long requesterId) {
-    logger.out("addRecommendationForRequester?id=" + id + "&requesterId=" + requesterId);
-    User sessionUser = userFacade.getUserBySessionId(getSessionId());
-    if (sessionUser == null)
-      return "redirect:/users/login";
-    RecommendationRequest recReq = new RecommendationRequest(requesterId, id);
-    userFacade.removeRequest(requesterId, sessionUser.getId(), id);
-    return addRecommendation(model, id);
-  }
-
   @RequestMapping(value = "/addRecommendation", method = RequestMethod.GET)
   public String addRecommendation(Model model, @RequestParam("id") long id) {
     logger.out("addRecommendation?id=" + id);
@@ -218,9 +206,25 @@ public class UserController {
     return "redirect:/users/user?id=" + userId;
   }
 
+  @RequestMapping(value = "/requestForRecommendationTo", method = RequestMethod.GET)
+  public String requestForRecommendationTo(Model model, @RequestParam("toId") long toId) {
+    logger.out("requestForRecommendationTo?toId=" + toId);
+    User sessionUser = userFacade.getUserBySessionId(getSessionId());
+    if (sessionUser == null)
+      return "redirect:/users/login";
+    User toUser = userFacade.getUserById(toId);
+    if (toUser == null)
+      return "redirect:/users/error";
+    model.addAttribute("navigation", getNavigation());
+    model.addAttribute("users", userFacade.listUsers());
+    model.addAttribute("toUser", toUser);
+    model.addAttribute("requesterUser", sessionUser);
+    return "requestRecommendation";
+  }
 
   @RequestMapping(value = "/requestForRecommendation", method = RequestMethod.GET)
-  public String requestForRecommendation(Model model, @RequestParam("fromId") long fromId, @RequestParam("toId") long toId) {
+  public String requestForRecommendation(Model model, @RequestParam("fromId") long fromId,
+                                                      @RequestParam("toId") long toId) {
     logger.out("requestForRecommendation?fromId=" + fromId + "&toId=" + toId);
     User sessionUser = userFacade.getUserBySessionId(getSessionId());
     if (sessionUser == null)
@@ -238,19 +242,16 @@ public class UserController {
     return requestForRecommendation(model, fromId, sessionUser.getId());
   }
 
-  @RequestMapping(value = "/requestForRecommendationTo", method = RequestMethod.GET)
-  public String requestForRecommendationTo(Model model, @RequestParam("toId") long toId) {
-    logger.out("requestForRecommendationTo?toId=" + toId);
+
+  @RequestMapping(value = "/addRecommendationForRequester", method = RequestMethod.GET)
+  public String addRecommendationForRequester(Model model, @RequestParam("id") long id,
+                                                           @RequestParam("requesterId") long requesterId) {
+    logger.out("addRecommendationForRequester?id=" + id + "&requesterId=" + requesterId);
     User sessionUser = userFacade.getUserBySessionId(getSessionId());
     if (sessionUser == null)
       return "redirect:/users/login";
-    User toUser = userFacade.getUserById(toId);
-    if (toUser == null)
-      return "redirect:/users/error";
-    model.addAttribute("navigation", getNavigation());
-    model.addAttribute("users", userFacade.listUsers());
-    model.addAttribute("toUser", toUser);
-    model.addAttribute("requesterUser", sessionUser);
-    return "requestRecommendation";
+    RecommendationRequest recReq = new RecommendationRequest(requesterId, id);
+    userFacade.removeRequest(requesterId, sessionUser.getId(), id);
+    return addRecommendation(model, id);
   }
 }
