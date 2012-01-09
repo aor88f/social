@@ -7,6 +7,6 @@ ${navigation}
 
 <ul>
   <c:forEach var="user" items="${users}">
-    <li><a href="user?id=${user.id}">${user.fullName}[${user.email}]</a></li>
+    <li><a href="user?id=${user.id}">${user.fullName}[${user.email}]</a>  <a href="requestForRecommendationToSessionUser?fromId=${user.id}">Request recommendation to you</a></li>
   </c:forEach>
 </ul>

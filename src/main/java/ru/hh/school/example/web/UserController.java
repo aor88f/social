@@ -215,7 +215,7 @@ public class UserController {
 
 
   @RequestMapping(value = "/requestForRecommendation", method = RequestMethod.GET)
-  public String user(Model model, @RequestParam("fromId") long fromId, @RequestParam("toId") long toId) {
+  public String requestForRecommendation(Model model, @RequestParam("fromId") long fromId, @RequestParam("toId") long toId) {
     logger.out("requestForRecommendation?fromId=" + fromId + "&toId=" + toId);
     User sessionUser = userFacade.getUserBySessionId(getSessionId());
     if (sessionUser == null)
@@ -224,16 +224,25 @@ public class UserController {
     return "redirect:/users/home";
   }
 
+  @RequestMapping(value = "/requestForRecommendationToSessionUser", method = RequestMethod.GET)
+  public String requestForRecommendationToSessionUser(Model model, @RequestParam("fromId") long fromId) {
+    logger.out("requestForRecommendationToSessionUser?fromId=" + fromId);
+    User sessionUser = userFacade.getUserBySessionId(getSessionId());
+    if (sessionUser == null)
+      return "redirect:/users/home";
+    return requestForRecommendation(model, fromId, sessionUser.getId());
+  }
+
 
 
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String user(Model model) {
+    public String test(Model model) {
         try {
-            userFacade.registerUser("aa@aa.ru","","");
-            userFacade.registerUser("bb@bb.ru","","");
-            userFacade.registerUser("cc@cc.ru","","");
-            userFacade.registerUser("dd@dd.ru","","");
+            userFacade.registerUser("aa@aa.aa","","Aaa");
+            userFacade.registerUser("bb@bb.bb","","Bbb");
+            userFacade.registerUser("cc@cc.cc","","Ccc");
+            userFacade.registerUser("dd@dd.dd","","Ddd");
         return "home";
         } catch (EmailAlreadyBoundException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.

@@ -31,7 +31,13 @@ ${navigation}
   <c:forEach var="recReq" items="${recommendationRequests}">
     <table border=1 cellpadding=5 width=320>
       <tr>
-        <td><a href="addRecommendationForRequester?id=${recReq.toUserInfo.id}&requesterId=${recReq.requesterUserInfo.id}">Recommend ${recReq.toUserInfo.email}</a> (Requester: ${recReq.requesterUserInfo.email})</td>
+        <td>
+          <a href="addRecommendationForRequester?id=${recReq.toUserInfo.id}&requesterId=${recReq.requesterUserInfo.id}">
+            Recommend ${recReq.toUserInfo.fullName}[${recReq.toUserInfo.email}]
+          </a>
+          <br>
+          Requester: ${recReq.requesterUserInfo.fullName}[${recReq.requesterUserInfo.email}]
+        </td>
       </tr>
     </table>
     <br>
@@ -44,10 +50,14 @@ ${navigation}
   <c:forEach var="rec" items="${recommendations}">
     <table border=1 cellpadding=5 width=320>
       <tr>
-        <td><a href="user?id=${rec.fromUserInfo.id}">${rec.fromUserInfo.fullName}[${rec.fromUserInfo.email}]</a></td>
+        <td>
+          <a href="user?id=${rec.fromUserInfo.id}">${rec.fromUserInfo.fullName}[${rec.fromUserInfo.email}]</a>
+        </td>
       </tr>
       <tr>
-        <td>${rec.text}</td>
+        <td>
+          ${rec.text}
+        </td>
       </tr>
     </table>
     <br>
