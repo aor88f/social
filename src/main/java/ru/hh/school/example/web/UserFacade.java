@@ -1,8 +1,7 @@
 package ru.hh.school.example.web;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.hh.school.example.Logger;
@@ -51,6 +50,15 @@ public class UserFacade {
     }
     Collections.reverse(recsEx);
     return recsEx;
+  }
+
+  public Iterable<RecommendationRequest> listRecommendationRequests(long id) {
+    logger.out("listRecommendationsToUser");
+    LinkedHashSet<RecommendationRequest> recommendationRequestList = userService.getUserById(id).getRecommendationsRequestsList();
+    LinkedList<RecommendationRequest> ret = new LinkedList<RecommendationRequest>();
+    for (RecommendationRequest recReq : recommendationRequestList)
+      ret.addFirst(recReq);
+    return ret;
   }
 
   public Long registerUser(String email, String password, String fullName) throws EmailAlreadyBoundException, InvalidEmailException {
