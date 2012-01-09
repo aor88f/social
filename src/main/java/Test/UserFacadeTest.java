@@ -4,6 +4,7 @@ import ru.hh.school.example.User;
 import ru.hh.school.example.UserRepository;
 import ru.hh.school.example.UserService;
 import ru.hh.school.example.exceptions.login.LoginException;
+import ru.hh.school.example.exceptions.mail.InvalidEmailException;
 import ru.hh.school.example.impl.MemUserRepository;
 import ru.hh.school.example.web.RecommendationRequestEx;
 import ru.hh.school.example.web.RecommendationToUserEx;
@@ -16,11 +17,13 @@ public class UserFacadeTest extends junit.framework.TestCase {
   private UserFacade userFacade = new UserFacade(userRepository, new UserService(userRepository));
 
   public void testRegisterLoginLogout() throws Exception {
-    final String email         = "asdf@asdf.asdf";
-    final String password      = "password";
-    final String wrongPassword = "wrong password";
-    final String sessionId     = "Session ID";
-    final String fullName      = "Full Name";
+    final String email          = "asdf@asdf.asdf";
+    final String invalidEmail   = "asdf";
+    final String password       = "password";
+    final String wrongPassword  = "wrong password";
+    final String sessionId      = "Session ID";
+    final String fullName       = "Full Name";
+      
     assertNull(userFacade.getUserById(1));
     userFacade.registerUser(email, password, fullName);
     assertNotNull(userFacade.getUserById(1));
@@ -41,6 +44,13 @@ public class UserFacadeTest extends junit.framework.TestCase {
     userFacade.logoutUser(sessionId);
     sessionUser = userFacade.getUserBySessionId(sessionId);
     assertNull(sessionUser);
+
+    try {
+      userFacade.registerUser(invalidEmail, fullName, password);
+      assertTrue(false);
+    }
+    catch (InvalidEmailException e) {
+    }
   }
 
     public void testGetUserById() throws Exception {
